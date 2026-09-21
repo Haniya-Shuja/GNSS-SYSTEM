@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Signal Tracking Status | GNSS Toolkit</title>
+
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    /* =====================================================
+       SIGNAL TRACKING STATUS
+       ===================================================== */
+
+    .tracking-container {
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    .tracking-panel {
+      background: #ffffff;
+      border: 1px solid #dfe7ec;
+      border-radius: 10px;
+      padding: 24px;
+      box-shadow: 0 4px 14px rgba(16, 36, 62, 0.06);
+    }
+
+    .tracking-panel h3 {
+      margin: 0 0 6px;
+      color: #182b3c;
+      font-size: 17px;
+    }
+
+    .tracking-description {
+      margin: 0 0 22px;
+      color: #667789;
+      font-size: 13px;
+    }
+
+    /* =====================================================
+       RADIO BUTTONS
+       ===================================================== */
+
+    .tracking-options {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+
+    .tracking-option {
+      position: relative;
+    }
+
+    .tracking-option input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .tracking-option label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      min-height: 52px;
+      padding: 10px 13px;
+
+      border: 1px solid #dce5ea;
+      border-radius: 8px;
+
+      background: #f9fbfc;
+      color: #405467;
+
+      font-size: 12px;
+      font-weight: 600;
+
+      cursor: pointer;
+
+      transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        color 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .tracking-option label:hover {
+      border-color: #0d9f7a;
+    }
+
+    /* Radio circle */
+
+    .radio-circle {
+      width: 16px;
+      height: 16px;
+
+      min-width: 16px;
+
+      border: 2px solid #9aaab5;
+      border-radius: 50%;
+
+      position: relative;
+      background: #ffffff;
+    }
+
+    .tracking-option input:checked + label {
+      border-color: #0d9f7a;
+      background: rgba(13, 159, 122, 0.07);
+      color: #08765c;
+      box-shadow: 0 3px 10px rgba(13, 159, 122, 0.08);
+    }
+
+    .tracking-option input:checked + label .radio-circle {
+      border-color: #0d9f7a;
+    }
+
+    .tracking-option input:checked + label .radio-circle::after {
+      content: "";
+
+      position: absolute;
+
+      width: 7px;
+      height: 7px;
+
+      border-radius: 50%;
+
+      background: #0d9f7a;
+
+      top: 50%;
+      left: 50%;
+
+      transform: translate(-50%, -50%);
+    }
+
+    /* =====================================================
+       ACTIVE PARAMETER DISPLAY
+       ===================================================== */
+
+    .tracking-display {
+      border: 1px solid #dfe7ec;
+      border-radius: 9px;
+      background: #f8fafb;
+      padding: 20px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 20px;
+    }
+
+    .tracking-current {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .tracking-current-label {
+      color: #7a8995;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .tracking-current-name {
+      color: #182b3c;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .tracking-value {
+      text-align: right;
+    }
+
+    .tracking-value strong {
+      display: block;
+      color: #0d9f7a;
+      font-size: 26px;
+      line-height: 1.2;
+    }
+
+    .tracking-value small {
+      color: #667789;
+      font-size: 11px;
+    }
+
+    .tracking-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+
+      margin-top: 8px;
+
+      color: #0d9f7a;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .tracking-status-dot {
+      width: 7px;
+      height: 7px;
+
+      border-radius: 50%;
+
+      background: #0d9f7a;
+
+      box-shadow:
+        0 0 0 3px rgba(13, 159, 122, 0.12);
+    }
+
+    /* =====================================================
+       CONSTELLATION
+       ===================================================== */
+
+    .constellation-panel {
+      margin-top: 20px;
+    }
+
+    .constellation-panel h3 {
+      margin-bottom: 6px;
+    }
+
+    .constellation-panel p {
+      margin: 0 0 16px;
+      color: #667789;
+      font-size: 13px;
+    }
+
+    /* =====================================================
+       RESPONSIVE
+       ===================================================== */
+
+    @media (max-width: 1100px) {
+
+      .tracking-options {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+    }
+
+    @media (max-width: 700px) {
+
+      .tracking-panel {
+        padding: 17px;
+      }
+
+      .tracking-options {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .tracking-display {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .tracking-value {
+        text-align: left;
+      }
+
+    }
+
+    @media (max-width: 480px) {
+
+      .tracking-options {
+        grid-template-columns: 1fr;
+      }
+
+      .tracking-option label {
+        min-height: 48px;
+      }
+
+      .tracking-current-name {
+        font-size: 16px;
+      }
+
+      .tracking-value strong {
+        font-size: 22px;
+      }
+
+    }
+    
+/* =========================================================
+   PROFESSIONAL FOOTER
+   ========================================================= */
+
+footer {
+    width: 100%;
+    margin-top: auto;
+    min-height: 64px;
+    padding: 12px 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    background: #072037;
+    border-top: 2px solid #009677;
+
+    color: #b7c7d7;
+    font-size: 0.78rem;
+    line-height: 1.4;
+
+    box-shadow: 0 -4px 15px rgba(7, 32, 55, 0.08);
+}
+
+footer span {
+    display: block;
+    white-space: nowrap;
+}
+
+footer span:first-child {
+    color: #94a9bf;
+    font-weight: 500;
+}
+
+footer span:nth-child(2) {
+    color: #ffffff;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+}
+
+footer span:last-child {
+    color: #94a9bf;
+    text-align: right;
+    font-weight: 500;
+}
+
+/* Footer responsive */
+@media (max-width: 600px) {
+    footer {
+        min-height: 90px;
+        padding: 14px 16px;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        gap: 5px;
+    }
+
+    footer span {
+        white-space: normal;
+        text-align: center !important;
+    }
+}
+
+
+  </style>
+
+</head>
+
+
+<body>
+
+<div class="app-shell">
+
+
+  <!-- =====================================================
+       SIDEBAR
+       ===================================================== -->
+
+  <aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-brand">
+
+      <div class="brand-mark">
+        GNSS
+      </div>
+
+      <div>
+        <strong>GNSS Toolkit</strong>
+        <small>Performance Monitor</small>
+      </div>
+
+    </div>
+
+
+    <nav class="sidebar-nav">
+
+      <a class="nav-item" href="../index.html">
+        <span>⌂</span>
+        Home
+      </a>
+
+      <a class="nav-item" href="configuration.html">
+        <span>⚙</span>
+        Configuration Setting
+      </a>
+
+      <a class="nav-item" href="position.html">
+        <span>◎</span>
+        Position Window
+      </a>
+
+      <a class="nav-item" href="sky-view.html">
+        <span>◉</span>
+        Sky View
+      </a>
+
+      <a class="nav-item" href="dop.html">
+        <span>▥</span>
+        Dilution of Precision
+      </a>
+
+      <a class="nav-item" href="plan-view.html">
+        <span>⌖</span>
+        Plan View
+      </a>
+
+      <a class="nav-item active" href="signal-tracking.html">
+        <span>⌁</span>
+        Signal Tracking
+      </a>
+
+      <a class="nav-item" href="integrity.html">
+        <span>◫</span>
+        Integrity Graphs
+      </a>
+
+      <a class="nav-item" href="aviation.html">
+        <span>✈</span>
+        Aviation Graphs
+      </a>
+
+    </nav>
+
+
+  
+
+  </aside>
+
+
+  <!-- =====================================================
+       MAIN CONTENT
+       ===================================================== -->
+
+  <main class="main-content">
+
+
+    <!-- TOP BAR -->
+
+    <header class="topbar">
+
+      <button
+        class="menu-btn"
+        onclick="toggleSidebar()">
+        ☰
+      </button>
+
+
+      <div>
+
+        <div class="breadcrumb">
+          GNSS / Signal Tracking Status
+        </div>
+
+        <h1>
+          Signal Tracking Status
+        </h1>
+
+      </div>
+
+
+      <button
+        class="exit-btn"
+        onclick="handleExit()">
+        Exit
+      </button>
+
+    </header>
+
+
+    <div class="page-content">
+
+
+      <!-- BACK BUTTONS -->
+
+      <div class="back-row">
+
+        <a
+          class="back-btn"
+          href="../index.html">
+          ← Home
+        </a>
+
+        <button
+          class="back-btn"
+          onclick="history.back()">
+          ← Back
+        </button>
+
+      </div>
+
+
+      <!-- PAGE TITLE -->
+
+      <div class="page-title">
+
+        <h2>
+          06. Signal Tracking Status
+        </h2>
+
+        <p>
+          Monitor signal quality and tracking parameters.
+        </p>
+
+      </div>
+
+
+      <!-- =================================================
+           SIGNAL TRACKING
+           ================================================= -->
+
+      <div class="tracking-container">
+
+
+        <div class="tracking-panel">
+
+          <h3>
+            Signal Tracking Status
+          </h3>
+
+          <p class="tracking-description">
+            Select a tracking parameter to view its current GNSS status.
+          </p>
+
+
+          <!-- =================================================
+               RADIO BUTTONS
+               ================================================= -->
+
+          <div class="tracking-options">
+
+
+            <!-- Carrier / Noise Ratio -->
+
+            <div class="tracking-option">
+
+              <input
+                type="radio"
+                name="trackingParameter"
+                id="cnr"
+                value="cnr"
+                checked
+                onchange="changeTrackingParameter('cnr')">
+
+              <label for="cnr">
+
+                <span class="radio-circle"></span>
+
+                Carrier/Noise Ratio
+
+              </label>
+
+            </div>
+
+
+            <!-- Pseudo Range -->
+
+            <div class="tracking-option">
+
+              <input
+                type="radio"
+                name="trackingParameter"
+                id="pseudo"
+                value="pseudo"
+                onchange="changeTrackingParameter('pseudo')">
+
+              <label for="pseudo">
+
+                <span class="radio-circle"></span>
+
+                Pseudo Range
+
+              </label>
+
+            </div>
+
+
+            <!-- Carrier Phase -->
+
+            <div class="tracking-option">
+
+              <input
+                type="radio"
+                name="trackingParameter"
+                id="carrier"
+                value="carrier"
+                onchange="changeTrackingParameter('carrier')">
+
+              <label for="carrier">
+
+                <span class="radio-circle"></span>
+
+                Carrier Phase
+
+              </label>
+
+            </div>
+
+
+            <!-- Doppler -->
+
+            <div class="tracking-option">
+
+              <input
+                type="radio"
+                name="trackingParameter"
+                id="doppler"
+                value="doppler"
+                onchange="changeTrackingParameter('doppler')">
+
+              <label for="doppler">
+
+                <span class="radio-circle"></span>
+
+                Doppler
+
+              </label>
+
+            </div>
+
+
+            <!-- Lock Time -->
+
+            <div class="tracking-option">
+
+              <input
+                type="radio"
+                name="trackingParameter"
+                id="lock"
+                value="lock"
+                onchange="changeTrackingParameter('lock')">
+
+              <label for="lock">
+
+                <span class="radio-circle"></span>
+
+                Lock Time
+
+              </label>
+
+            </div>
+
+
+          </div>
+
+
+          <!-- =================================================
+               ACTIVE PARAMETER
+               ================================================= -->
+
+          <div class="tracking-display">
+
+
+            <div class="tracking-current">
+
+              <span class="tracking-current-label">
+                Selected Parameter
+              </span>
+
+              <span
+                class="tracking-current-name"
+                id="parameterName">
+                Carrier/Noise Ratio
+              </span>
+
+              <span class="tracking-status">
+
+                <span class="tracking-status-dot"></span>
+
+                Signal Tracking Active
+
+              </span>
+
+            </div>
+
+
+            <div class="tracking-value">
+
+              <strong id="parameterValue">
+                42.6
+              </strong>
+
+              <small id="parameterUnit">
+                dB-Hz
+              </small>
+
+            </div>
+
+
+          </div>
+
+        </div>
+
+
+        <!-- =================================================
+             CONSTELLATION COVERAGE
+             ================================================= -->
+
+        <div
+          class="panel constellation-panel">
+
+          <h3>
+            Constellation Coverage
+          </h3>
+
+          <p>
+            Currently monitored GNSS constellations.
+          </p>
+
+
+          <div class="chips">
+
+            <span class="chip">
+              GPS
+            </span>
+
+            <span class="chip">
+              GLONASS
+            </span>
+
+            <span class="chip">
+              BeiDou
+            </span>
+
+            <span class="chip">
+              Galileo
+            </span>
+
+            <span class="chip">
+              QZSS
+            </span>
+
+            <span class="chip">
+              SBAS
+            </span>
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+      <span>
+        Rx • Logging • Error
+      </span>
+
+      <span>
+        Copyright @SUP
+      </span>
+
+      <span>
+        GNSS Performance Monitoring Toolkit
+      </span>
+
+    </footer>
+
+
+  </main>
+
+</div>
+
+
+<script src="../js/app.js"></script>
+
+
+<!-- =========================================================
+     SIGNAL TRACKING JAVASCRIPT
+     ========================================================= -->
+
+<script>
+
+const trackingData = {
+
+  cnr: {
+    name: "Carrier/Noise Ratio",
+    value: "42.6",
+    unit: "dB-Hz"
+  },
+
+  pseudo: {
+    name: "Pseudo Range",
+    value: "24,581.42",
+    unit: "m"
+  },
+
+  carrier: {
+    name: "Carrier Phase",
+    value: "128,542.73",
+    unit: "cycles"
+  },
+
+  doppler: {
+    name: "Doppler",
+    value: "-1,245.37",
+    unit: "Hz"
+  },
+
+  lock: {
+    name: "Lock Time",
+    value: "184.6",
+    unit: "s"
+  }
+
+};
+
+
+/* =========================================================
+   CHANGE SELECTED PARAMETER
+   ========================================================= */
+
+function changeTrackingParameter(parameter) {
+
+  const data =
+    trackingData[parameter];
+
+  if (!data) {
+    return;
+  }
+
+
+  document.getElementById(
+    "parameterName"
+  ).textContent = data.name;
+
+
+  document.getElementById(
+    "parameterValue"
+  ).textContent = data.value;
+
+
+  document.getElementById(
+    "parameterUnit"
+  ).textContent = data.unit;
+
+}
+
+</script>
+
+</body>
+</html>

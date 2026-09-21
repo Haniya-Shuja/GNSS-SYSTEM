@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sky View | GNSS Toolkit</title>
+
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    /* =========================================================
+       SKY VIEW - PROFESSIONAL CENTERED LAYOUT
+       ========================================================= */
+
+    .sky-view-wrapper {
+      width: 100%;
+      max-width: 1150px;
+      margin: 0 auto;
+      padding: 10px 20px 35px;
+    }
+
+    .sky-view-container {
+      width: 100%;
+      background: #ffffff;
+      border: 1px solid #dfe7ec;
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 8px 28px rgba(16, 36, 62, 0.08);
+    }
+
+    /* =========================================================
+       PAGE HEADING
+       ========================================================= */
+
+    .sky-view-heading {
+      text-align: center;
+      margin-bottom: 28px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #e5ebef;
+    }
+
+    .sky-view-heading h2 {
+      margin: 0 0 8px;
+      color: #10243e;
+      font-size: 1.7rem;
+      font-weight: 700;
+    }
+
+    .sky-view-heading p {
+      margin: 0;
+      color: #667789;
+      font-size: 0.95rem;
+    }
+
+    /* =========================================================
+       PANEL
+       ========================================================= */
+
+    .panel {
+      background: #ffffff;
+      border: 1px solid #dfe7ec;
+      border-radius: 12px;
+      padding: 22px 24px;
+      margin-bottom: 18px;
+    }
+
+    .panel:last-child {
+      margin-bottom: 0;
+    }
+
+    .panel h3 {
+      margin: 0 0 7px;
+      color: #10243e;
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+
+    .panel > p {
+      margin: 0 0 16px;
+      color: #667789;
+      font-size: 0.9rem;
+    }
+
+    /* =========================================================
+       SKY PLOT
+       ========================================================= */
+
+    .sky-plot-wrapper {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(16, 36, 62, 0.05);
+      overflow: hidden;
+      margin-top: 16px;
+    }
+
+    .sky-plot-menubar {
+      background: #f8fafc;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 8px 16px;
+      font-size: 13px;
+      color: #475569;
+      display: flex;
+      gap: 16px;
+    }
+
+    .sky-plot-legend {
+      display: flex;
+      gap: 18px;
+      padding: 10px 18px;
+      background: #ffffff;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 12px;
+      font-weight: 500;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    .dot-gps {
+      background: #f97316;
+    }
+
+    .dot-glonass {
+      background: #16a34a;
+    }
+
+    .dot-galileo {
+      background: #06b6d4;
+    }
+
+    .dot-beidou {
+      background: #9333ea;
+    }
+
+    .dot-sbas {
+      background: #2563eb;
+    }
+
+    /* =========================================================
+       SKY PLOT CANVAS
+       ========================================================= */
+
+    .sky-plot-canvas {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 28px 20px;
+      background: #ffffff;
+      width: 100%;
+    }
+
+    .sky-plot-canvas svg {
+      display: block;
+      width: 100%;
+      max-width: 620px;
+      height: auto;
+    }
+
+    /* =========================================================
+       SKY GRAPH ELEMENTS
+       ========================================================= */
+
+    .grid-circle {
+      fill: none;
+      stroke: #cbd5e1;
+      stroke-width: 1;
+    }
+
+    .grid-subcircle {
+      fill: none;
+      stroke: #f1f5f9;
+      stroke-width: 0.8;
+      stroke-dasharray: 2 2;
+    }
+
+    .radial-line {
+      stroke: #e2e8f0;
+      stroke-width: 1;
+    }
+
+    .azimuth-text {
+      font-size: 11px;
+      fill: #475569;
+      font-weight: 600;
+      text-anchor: middle;
+      dominant-baseline: central;
+      font-family: sans-serif;
+    }
+
+    .elevation-text {
+      font-size: 10px;
+      fill: #64748b;
+      font-weight: 500;
+      text-anchor: middle;
+      dominant-baseline: central;
+      font-family: sans-serif;
+    }
+
+    .sat-track {
+      fill: none;
+      stroke-linecap: round;
+      opacity: 0.85;
+    }
+
+    .sat-label {
+      font-size: 10px;
+      font-weight: bold;
+      fill: #ffffff;
+      text-anchor: middle;
+      dominant-baseline: central;
+      font-family: sans-serif;
+    }
+
+    /* =========================================================
+       CONSTELLATION CHIPS
+       ========================================================= */
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      min-height: 34px;
+      padding: 7px 15px;
+
+      background: #f8fafc;
+      border: 1px solid #dfe7ec;
+      border-radius: 20px;
+
+      color: #10243e;
+      font-size: 0.85rem;
+      font-weight: 600;
+
+      transition: 0.2s ease;
+    }
+
+    .chip:hover {
+      background: #eef8f6;
+      border-color: #b9d9d4;
+      color: #0d9488;
+      transform: translateY(-1px);
+    }
+
+    /* =========================================================
+       BACK BUTTON
+       ========================================================= */
+
+    .back-row {
+      max-width: 1150px;
+      margin: 0 auto 15px;
+      padding: 0 20px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .back-btn {
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+
+  
+/* =========================================================
+   PROFESSIONAL FOOTER
+   ========================================================= */
+
+footer {
+    width: 100%;
+    margin-top: auto;
+    min-height: 64px;
+    padding: 12px 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    background: #072037;
+    border-top: 2px solid #009677;
+
+    color: #b7c7d7;
+    font-size: 0.78rem;
+    line-height: 1.4;
+
+    box-shadow: 0 -4px 15px rgba(7, 32, 55, 0.08);
+}
+
+footer span {
+    display: block;
+    white-space: nowrap;
+}
+
+footer span:first-child {
+    color: #94a9bf;
+    font-weight: 500;
+}
+
+footer span:nth-child(2) {
+    color: #ffffff;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+}
+
+footer span:last-child {
+    color: #94a9bf;
+    text-align: right;
+    font-weight: 500;
+}
+
+/* Footer responsive */
+@media (max-width: 600px) {
+    footer {
+        min-height: 90px;
+        padding: 14px 16px;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        gap: 5px;
+    }
+
+    footer span {
+        white-space: normal;
+        text-align: center !important;
+    }
+}
+
+
+
+    /* =========================================================
+       TABLET
+       ========================================================= */
+
+    @media (max-width: 900px) {
+
+      .sky-view-wrapper {
+        padding: 8px 16px 30px;
+      }
+
+      .sky-view-container {
+        padding: 22px;
+      }
+
+      .sky-view-heading h2 {
+        font-size: 1.55rem;
+      }
+
+      .panel {
+        padding: 20px;
+      }
+
+      .sky-plot-canvas {
+        padding: 22px 15px;
+      }
+    }
+
+    /* =========================================================
+       MOBILE
+       ========================================================= */
+
+    @media (max-width: 600px) {
+
+      .sky-view-wrapper {
+        padding: 5px 10px 25px;
+      }
+
+      .sky-view-container {
+        padding: 16px;
+        border-radius: 12px;
+      }
+
+      .sky-view-heading {
+        margin-bottom: 20px;
+        padding-bottom: 16px;
+      }
+
+      .sky-view-heading h2 {
+        font-size: 1.35rem;
+      }
+
+      .sky-view-heading p {
+        font-size: 0.85rem;
+        line-height: 1.5;
+      }
+
+      .panel {
+        padding: 16px 14px;
+        border-radius: 10px;
+      }
+
+      .panel h3 {
+        font-size: 0.98rem;
+      }
+
+      .panel > p {
+        font-size: 0.83rem;
+        line-height: 1.5;
+      }
+
+      .sky-plot-wrapper {
+        margin-top: 12px;
+      }
+
+      .sky-plot-menubar {
+        padding: 7px 12px;
+        font-size: 12px;
+      }
+
+      .sky-plot-legend {
+        gap: 10px 14px;
+        padding: 10px 12px;
+        font-size: 11px;
+      }
+
+      .sky-plot-canvas {
+        padding: 16px 8px;
+        overflow: hidden;
+      }
+
+      .sky-plot-canvas svg {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .chips {
+        gap: 8px;
+      }
+
+      .chip {
+        min-height: 32px;
+        padding: 6px 12px;
+        font-size: 0.8rem;
+      }
+
+      .back-row {
+        padding: 0 10px;
+        flex-wrap: wrap;
+      }
+    }
+
+    /* =========================================================
+       SMALL MOBILE
+       ========================================================= */
+
+    @media (max-width: 380px) {
+
+      .sky-view-container {
+        padding: 12px;
+      }
+
+      .sky-view-heading h2 {
+        font-size: 1.2rem;
+      }
+
+      .sky-view-heading p {
+        font-size: 0.8rem;
+      }
+
+      .panel {
+        padding: 13px 10px;
+      }
+
+      .sky-plot-legend {
+        gap: 8px 10px;
+      }
+
+      .sky-plot-canvas {
+        padding: 12px 4px;
+      }
+
+      .chip {
+        font-size: 0.76rem;
+        padding: 5px 10px;
+      }
+    }
+  </style>
+
+</head>
+
+<body>
+
+<div class="app-shell">
+
+  <!-- SIDEBAR -->
+
+  <aside class="sidebar" id="sidebar">
+
+```
+<div class="sidebar-brand">
+  <div class="brand-mark">GNSS</div>
+
+  <div>
+    <strong>GNSS Toolkit</strong>
+    <small>Performance Monitor</small>
+  </div>
+</div>
+
+<nav class="sidebar-nav">
+
+  <a class="nav-item" href="../index.html">
+    <span>⌂</span>Home
+  </a>
+
+  <a class="nav-item" href="configuration.html">
+    <span>⚙</span>Configuration Setting
+  </a>
+
+  <a class="nav-item" href="position.html">
+    <span>◎</span>Position Window
+  </a>
+
+  <a class="nav-item active" href="sky-view.html">
+    <span>◉</span>Sky View
+  </a>
+
+  <a class="nav-item" href="dop.html">
+    <span>▥</span>Dilution of Precision
+  </a>
+
+  <a class="nav-item" href="plan-view.html">
+    <span>⌖</span>Plan View
+  </a>
+
+  <a class="nav-item" href="signal-tracking.html">
+    <span>⌁</span>Signal Tracking
+  </a>
+
+  <a class="nav-item" href="integrity.html">
+    <span>◫</span>Integrity Graphs
+  </a>
+
+  <a class="nav-item" href="aviation.html">
+    <span>✈</span>Aviation Graphs
+  </a>
+
+</nav>
+
+
+
+  </aside>
+
+  <!-- MAIN CONTENT -->
+
+  <main class="main-content">
+
+```
+<!-- TOPBAR -->
+<header class="topbar">
+
+  <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+
+  <div>
+    <div class="breadcrumb">GNSS / Sky View</div>
+    <h1>Sky View</h1>
+  </div>
+
+  <button class="exit-btn" onclick="handleExit()">Exit</button>
+
+</header>
+
+
+<!-- PAGE CONTENT -->
+<div class="page-content">
+
+  <!-- NAVIGATION -->
+  <div class="back-row">
+
+    <a class="back-btn" href="../index.html">
+      ← Home
+    </a>
+
+    <button class="back-btn" onclick="history.back()">
+      ← Back
+    </button>
+
+  </div>
+
+
+  <!-- CENTERED SKY VIEW CONTAINER -->
+  <div class="sky-view-wrapper">
+
+    <div class="sky-view-container">
+
+      <!-- PAGE TITLE -->
+      <div class="sky-view-heading">
+
+        <h2>03. Sky View</h2>
+
+        <p>
+          View satellite visibility and constellation coverage.
+        </p>
+
+      </div>
+
+
+      <!-- SATELLITE SKY VIEW -->
+      <div class="panel">
+
+        <h3>Satellite Sky View</h3>
+
+        <p>
+          Real-time satellite elevation and azimuth polar projection.
+        </p>
+
+
+        <!-- SKY PLOT -->
+        <div class="sky-plot-wrapper">
+
+          <div class="sky-plot-menubar">
+            <span>View</span>
+            <span>Help</span>
+          </div>
+
+
+          <!-- LEGEND -->
+          <div class="sky-plot-legend">
+
+            <span class="legend-item">
+              <span class="dot dot-gps"></span>
+              GPS
+            </span>
+
+            <span class="legend-item">
+              <span class="dot dot-glonass"></span>
+              GLONASS
+            </span>
+
+            <span class="legend-item">
+              <span class="dot dot-galileo"></span>
+              Galileo
+            </span>
+
+            <span class="legend-item">
+              <span class="dot dot-beidou"></span>
+              BeiDou
+            </span>
+
+            <span class="legend-item">
+              <span class="dot dot-sbas"></span>
+              SBAS
+            </span>
+
+          </div>
+
+
+          <!-- SKY PLOT CANVAS -->
+          <div class="sky-plot-canvas">
+
+            <svg viewBox="0 0 600 600">
+
+              <!-- Radial Lines -->
+              <line x1="300" y1="50" x2="300" y2="550" class="radial-line"/>
+              <line x1="50" y1="300" x2="550" y2="300" class="radial-line"/>
+              <line x1="123" y1="123" x2="477" y2="477" class="radial-line"/>
+              <line x1="123" y1="477" x2="477" y2="123" class="radial-line"/>
+              <line x1="175" y1="83" x2="425" y2="517" class="radial-line"/>
+              <line x1="425" y1="83" x2="175" y2="517" class="radial-line"/>
+              <line x1="83" y1="175" x2="517" y2="425" class="radial-line"/>
+              <line x1="83" y1="425" x2="517" y2="175" class="radial-line"/>
+
+
+              <!-- Elevation Circles -->
+              <circle cx="300" cy="300" r="250" class="grid-circle" stroke-width="1.5"/>
+              <circle cx="300" cy="300" r="208" class="grid-subcircle"/>
+              <circle cx="300" cy="300" r="166" class="grid-circle"/>
+              <circle cx="300" cy="300" r="125" class="grid-subcircle"/>
+              <circle cx="300" cy="300" r="83" class="grid-circle"/>
+              <circle cx="300" cy="300" r="41" class="grid-subcircle"/>
+              <circle cx="300" cy="300" r="3" fill="#64748b"/>
+
+
+              <!-- Azimuth Labels -->
+              <text x="300" y="38" class="azimuth-text">0</text>
+              <text x="430" y="72" class="azimuth-text">30</text>
+              <text x="525" y="170" class="azimuth-text">60</text>
+              <text x="562" y="300" class="azimuth-text">90</text>
+              <text x="525" y="430" class="azimuth-text">120</text>
+              <text x="430" y="525" class="azimuth-text">150</text>
+              <text x="300" y="562" class="azimuth-text">180</text>
+              <text x="170" y="525" class="azimuth-text">210</text>
+              <text x="75" y="430" class="azimuth-text">240</text>
+              <text x="38" y="300" class="azimuth-text">270</text>
+              <text x="75" y="170" class="azimuth-text">300</text>
+              <text x="170" y="72" class="azimuth-text">330</text>
+
+
+              <!-- Elevation Labels -->
+              <text x="306" y="505" class="elevation-text">15</text>
+              <text x="306" y="463" class="elevation-text">30</text>
+              <text x="306" y="422" class="elevation-text">45</text>
+              <text x="306" y="380" class="elevation-text">60</text>
+              <text x="306" y="338" class="elevation-text">75</text>
+
+
+              <!-- Orbital Tracks -->
+              <path d="M 224 140 Q 220 180 219 224"
+                    class="sat-track"
+                    stroke="#f97316"
+                    stroke-width="2"/>
+
+              <path d="M 230 140 Q 215 170 212 195"
+                    class="sat-track"
+                    stroke="#16a34a"
+                    stroke-width="1.8"/>
+
+              <path d="M 412 140 Q 380 180 370 205"
+                    class="sat-track"
+                    stroke="#f97316"
+                    stroke-width="2"/>
+
+              <path d="M 370 145 Q 365 190 368 230"
+                    class="sat-track"
+                    stroke="#16a34a"
+                    stroke-width="1.8"/>
+
+              <path d="M 252 368 Q 242 410 240 445"
+                    class="sat-track"
+                    stroke="#f97316"
+                    stroke-width="2"/>
+
+              <path d="M 275 400 Q 275 450 282 505"
+                    class="sat-track"
+                    stroke="#16a34a"
+                    stroke-width="1.8"/>
+
+              <path d="M 390 355 Q 385 410 380 450"
+                    class="sat-track"
+                    stroke="#f97316"
+                    stroke-width="2"/>
+
+              <path d="M 425 260 Q 428 320 426 370"
+                    class="sat-track"
+                    stroke="#9333ea"
+                    stroke-width="2"/>
+
+              <path d="M 415 235 Q 425 285 430 330"
+                    class="sat-track"
+                    stroke="#f97316"
+                    stroke-width="2"/>
+
+
+              <!-- GPS SATELLITES -->
+
+              <g transform="translate(415,140)">
+                <circle cx="0" cy="0" r="10" fill="#f97316"/>
+                <text class="sat-label">5</text>
+              </g>
+
+              <g transform="translate(212,195)">
+                <circle cx="0" cy="0" r="10" fill="#f97316"/>
+                <text class="sat-label">26</text>
+              </g>
+
+              <g transform="translate(262,188)">
+                <circle cx="0" cy="0" r="10" fill="#f97316"/>
+                <text class="sat-label">21</text>
+              </g>
+
+              <g transform="translate(337,210)">
+                <circle cx="0" cy="0" r="10" fill="#f97316"/>
+                <text class="sat-label">20</text>
+              </g>
+
+              <g transform="translate(338,268)">
+                <circle cx="0" cy="0" r="10" fill="#f97316"/>
+                <text class="sat-label">29</text>
+              </g>
+
+              <g transform="translate(420,230)">
+                <circle cx="0" cy="0" r="10" fill="#f97316"/>
+                <text class="sat-label">13</text>
+              </g>
+
+              <g transform="translate(390,350)">
+                <circle cx="0" cy="0" r="10" fill="#f97316"/>
+                <text class="sat-label">15</text>
+              </g>
+
+              <g transform="translate(252,360)">
+                <circle cx="0" cy="0" r="10" fill="#f97316"/>
+                <text class="sat-label">18</text>
+              </g>
+
+              <g transform="translate(215,425)">
+                <circle cx="0" cy="0" r="10" fill="#f97316"/>
+                <text class="sat-label">10</text>
+              </g>
+
+              <g transform="translate(278,455)">
+                <circle cx="0" cy="0" r="10" fill="#f97316"/>
+                <text class="sat-label">25</text>
+              </g>
+
+
+              <!-- GLONASS SATELLITES -->
+
+              <g transform="translate(240,125)">
+                <circle cx="0" cy="0" r="10" fill="#16a34a"/>
+                <text class="sat-label">19</text>
+              </g>
+
+              <g transform="translate(378,135)">
+                <circle cx="0" cy="0" r="10" fill="#16a34a"/>
+                <text class="sat-label">2</text>
+              </g>
+
+              <g transform="translate(330,185)">
+                <circle cx="0" cy="0" r="10" fill="#16a34a"/>
+                <text class="sat-label">18</text>
+              </g>
+
+              <g transform="translate(405,272)">
+                <circle cx="0" cy="0" r="10" fill="#16a34a"/>
+                <text class="sat-label">17</text>
+              </g>
+
+              <g transform="translate(280,420)">
+                <circle cx="0" cy="0" r="10" fill="#16a34a"/>
+                <text class="sat-label">4</text>
+              </g>
+
+
+              <!-- BEIDOU SATELLITES -->
+
+              <g transform="translate(385,205)">
+                <circle cx="0" cy="0" r="10" fill="#9333ea"/>
+                <text class="sat-label">6</text>
+              </g>
+
+              <g transform="translate(404,268)">
+                <circle cx="0" cy="0" r="10" fill="#9333ea"/>
+                <text class="sat-label">13</text>
+              </g>
+
+              <g transform="translate(426,320)">
+                <circle cx="0" cy="0" r="10" fill="#9333ea"/>
+                <text class="sat-label">8</text>
+              </g>
+
+              <g transform="translate(422,335)">
+                <circle cx="0" cy="0" r="10" fill="#9333ea"/>
+                <text class="sat-label">7</text>
+              </g>
+
+              <g transform="translate(370,375)">
+                <circle cx="0" cy="0" r="10" fill="#9333ea"/>
+                <text class="sat-label">2</text>
+              </g>
+
+            </svg>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- CONSTELLATIONS -->
+      <div class="panel">
+
+        <h3>Constellations</h3>
+
+        <div class="chips">
+
+          <span class="chip">GPS</span>
+          <span class="chip">GLONASS</span>
+          <span class="chip">BeiDou</span>
+          <span class="chip">Galileo</span>
+          <span class="chip">QZSS</span>
+          <span class="chip">SBAS</span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- FOOTER -->
+<footer>
+
+  <span>Rx • Logging • Error</span>
+
+  <span>Copyright @SUP</span>
+
+  <span>GNSS Performance Monitoring Toolkit</span>
+
+</footer>
+```
+
+  </main>
+
+</div>
+
+<script src="../js/app.js"></script>
+
+</body>
+</html>

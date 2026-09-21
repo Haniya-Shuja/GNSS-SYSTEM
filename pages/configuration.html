@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Configuration Setting | GNSS Toolkit</title>
+
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    /* =========================================================
+       FULL PAGE LAYOUT
+    ========================================================= */
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #f5f8fa;
+      overflow: hidden;
+    }
+
+    .app-shell {
+      display: flex;
+      width: 100%;
+      height: 100vh;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    /* =========================================================
+       SIDEBAR
+    ========================================================= */
+
+    .sidebar {
+      height: 100vh;
+      min-height: 100vh;
+      flex-shrink: 0;
+      box-sizing: border-box;
+    }
+
+    .sidebar-container {
+      height: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .sidebar-footer {
+      flex-shrink: 0;
+    }
+
+    /* =========================================================
+       MAIN CONTENT
+    ========================================================= */
+
+    .main-content {
+      flex: 1;
+      min-width: 0;
+      height: 100vh;
+      min-height: 100vh;
+
+      display: flex;
+      flex-direction: column;
+
+      background: #ffffff;
+
+      overflow: hidden;
+    }
+
+
+    /* =========================================================
+       PAGE CONTENT
+    ========================================================= */
+
+    .page-content {
+      flex: 1;
+      min-height: 0;
+
+      overflow-y: auto;
+      overflow-x: hidden;
+
+      background: #f5f8fa;
+    }
+
+    .content-container {
+      min-height: 100%;
+      box-sizing: border-box;
+    }
+
+    /* =========================================================
+       PROFESSIONAL FOOTER
+    ========================================================= */
+
+    .footer-bar {
+      width: 100%;
+      height: 48px;
+      min-height: 48px;
+
+      flex-shrink: 0;
+
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+
+      align-items: center;
+
+      padding: 0 24px;
+
+      box-sizing: border-box;
+
+      background: #10243e;
+
+      color: #ffffff;
+
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      font-size: 12px;
+
+      position: relative;
+      z-index: 20;
+    }
+
+    /* Footer sections */
+
+    .footer-item {
+      display: flex;
+      align-items: center;
+
+      min-width: 0;
+
+      white-space: nowrap;
+    }
+
+    /* Left */
+
+    .status-flags {
+      justify-content: flex-start;
+
+      color: #d8e2eb;
+
+      font-size: 12px;
+
+      letter-spacing: 0.2px;
+    }
+
+    .status-flags::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+
+      margin-right: 9px;
+
+      border-radius: 50%;
+
+      background: #0d9f7a;
+
+      box-shadow:
+        0 0 0 3px rgba(13, 159, 122, 0.12);
+    }
+
+    /* Center */
+
+    .copyright {
+      justify-content: center;
+
+      color: #aebdca;
+
+      padding: 0 20px;
+    }
+
+    /* Right */
+
+    .app-title {
+      justify-content: flex-end;
+
+      color: #d8e2eb;
+
+      font-weight: 500;
+
+      letter-spacing: 0.2px;
+    }
+
+    /* =========================================================
+       FOOTER HOVER / POLISH
+    ========================================================= */
+
+    .footer-bar::before {
+      content: "";
+
+      position: absolute;
+
+      top: 0;
+      left: 0;
+
+      width: 100%;
+      height: 1px;
+
+      background: rgba(13, 159, 122, 0.35);
+    }
+
+    /* =========================================================
+       TABLET
+    ========================================================= */
+
+    @media (max-width: 900px) {
+
+      .footer-bar {
+        grid-template-columns: 1fr 1fr;
+
+        height: auto;
+        min-height: 48px;
+
+        padding: 9px 18px;
+
+        row-gap: 5px;
+      }
+
+      .copyright {
+        justify-content: flex-end;
+        padding: 0;
+      }
+
+      .app-title {
+        grid-column: 1 / -1;
+
+        justify-content: center;
+
+        font-size: 11px;
+        color: #aebdca;
+      }
+    }
+
+    /* =========================================================
+       MOBILE
+    ========================================================= */
+
+    @media (max-width: 600px) {
+
+      body {
+        overflow: auto;
+      }
+
+      .app-shell {
+        height: auto;
+        min-height: 100vh;
+        overflow: visible;
+      }
+
+      .main-content {
+        height: auto;
+        min-height: 100vh;
+        overflow: visible;
+      }
+
+      .page-content {
+        overflow: visible;
+      }
+
+      .footer-bar {
+        display: flex;
+
+        flex-wrap: wrap;
+
+        justify-content: center;
+
+        gap: 7px 18px;
+
+        height: auto;
+        min-height: 52px;
+
+        padding: 10px 14px;
+
+        text-align: center;
+      }
+
+      .footer-item {
+        justify-content: center;
+      }
+
+      .status-flags {
+        font-size: 11px;
+      }
+
+      .copyright {
+        font-size: 11px;
+      }
+
+      .app-title {
+        width: 100%;
+
+        font-size: 10px;
+      }
+    }
+
+    /* =========================================================
+       SMALL MOBILE
+    ========================================================= */
+
+    @media (max-width: 400px) {
+
+      .footer-bar {
+        gap: 5px 12px;
+        padding: 9px 10px;
+      }
+
+      .status-flags,
+      .copyright {
+        font-size: 10px;
+      }
+
+      .app-title {
+        font-size: 9px;
+      }
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <!-- Root App Container -->
+
+  <div class="app-shell">
+
+
+    <!-- =====================================================
+         SIDEBAR NAVIGATION
+    ====================================================== -->
+
+    <aside class="sidebar" id="sidebar">
+
+      <div class="sidebar-container">
+
+
+        <!-- Brand Header -->
+
+        <div class="sidebar-brand">
+
+          <div class="brand-mark">
+            GNSS
+          </div>
+
+          <div class="brand-text">
+
+            <strong>
+              GNSS Toolkit
+            </strong>
+
+            <small>
+              Performance Monitor
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <!-- Navigation Menu -->
+
+        <nav class="sidebar-nav">
+
+          <a class="nav-item" href="../index.html">
+            <span>⌂</span>
+            Home
+          </a>
+
+          <a class="nav-item active" href="configuration.html">
+            <span>⚙</span>
+            Configuration Setting
+          </a>
+
+          <a class="nav-item" href="position.html">
+            <span>◎</span>
+            Position Window
+          </a>
+
+          <a class="nav-item" href="sky-view.html">
+            <span>◉</span>
+            Sky View
+          </a>
+
+          <a class="nav-item" href="dop.html">
+            <span>▥</span>
+            Dilution of Precision
+          </a>
+
+          <a class="nav-item" href="plan-view.html">
+            <span>⌖</span>
+            Plan View
+          </a>
+
+          <a class="nav-item" href="signal-tracking.html">
+            <span>⌁</span>
+            Signal Tracking
+          </a>
+
+          <a class="nav-item" href="integrity.html">
+            <span>◫</span>
+            Integrity Graphs
+          </a>
+
+          <a class="nav-item" href="aviation.html">
+            <span>✈</span>
+            Aviation Graphs
+          </a>
+
+        </nav>
+
+
+        <!-- Sidebar Footer Status -->
+
+  
+      </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main class="main-content">
+
+
+      <!-- ===================================================
+           TOPBAR HEADER
+      ==================================================== -->
+
+      <header class="topbar">
+
+        <div class="topbar-left">
+
+          <button
+            class="menu-btn"
+            onclick="toggleSidebar()">
+            ☰
+          </button>
+
+          <div class="header-titles">
+
+            <div class="breadcrumb">
+              GNSS / Configuration Setting
+            </div>
+
+            <h1>
+              Configuration Setting
+            </h1>
+
+          </div>
+
+        </div>
+
+
+        <div class="topbar-right">
+
+          <button
+            class="exit-btn"
+            onclick="handleExit()">
+            Exit
+          </button>
+
+        </div>
+
+      </header>
+
+
+      <!-- ===================================================
+           PAGE BODY
+      ==================================================== -->
+
+      <div class="page-content">
+
+        <div class="content-container">
+
+
+          <!-- Navigation Action Row -->
+
+          <div class="back-row">
+
+            <a
+              class="back-btn"
+              href="../index.html">
+              ← Home
+            </a>
+
+            <button
+              class="back-btn"
+              onclick="history.back()">
+              ← Back
+            </button>
+
+          </div>
+
+
+          <!-- Title Banner Section -->
+
+          <div class="page-title">
+
+            <h2>
+              01. Configuration Setting
+            </h2>
+
+            <p>
+              Select the source for the GNSS monitoring session.
+            </p>
+
+          </div>
+
+
+          <!-- Configuration Panel / Card -->
+
+          <div class="panel">
+
+            <div class="panel-header">
+
+              <h3>
+                Select Data Source
+              </h3>
+
+              <p>
+                Choose how GNSS monitoring data will enter the system.
+              </p>
+
+            </div>
+
+
+            <!-- Source Option List -->
+
+            <div class="source-options">
+
+
+              <!-- SERIAL -->
+
+              <a
+                class="source-option"
+                href="serial.html">
+
+                <span class="radio"></span>
+
+                <span class="option-details">
+
+                  <b>
+                    Serial
+                  </b>
+
+                  <small>
+                    Live serial source
+                  </small>
+
+                </span>
+
+                <span class="open-arrow">
+                  →
+                </span>
+
+              </a>
+
+
+              <!-- PLAYBACK -->
+
+              <a
+                class="source-option"
+                href="playback.html">
+
+                <span class="radio"></span>
+
+                <span class="option-details">
+
+                  <b>
+                    Playback
+                  </b>
+
+                  <small>
+                    Replay recorded data
+                  </small>
+
+                </span>
+
+                <span class="open-arrow">
+                  →
+                </span>
+
+              </a>
+
+
+              <!-- NETWORK -->
+
+              <a
+                class="source-option"
+                href="network.html">
+
+                <span class="radio"></span>
+
+                <span class="option-details">
+
+                  <b>
+                    Network
+                  </b>
+
+                  <small>
+                    Network data source
+                  </small>
+
+                </span>
+
+                <span class="open-arrow">
+                  →
+                </span>
+
+              </a>
+
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ===================================================
+           PROFESSIONAL FOOTER
+      ==================================================== -->
+
+      <footer class="footer-bar">
+
+
+        <!-- LEFT -->
+
+        <div class="footer-item status-flags">
+          Rx • Logging • Error
+        </div>
+
+
+        <!-- CENTER -->
+
+        <div class="footer-item copyright">
+          Copyright @SUP
+        </div>
+
+
+        <!-- RIGHT -->
+
+        <div class="footer-item app-title">
+          GNSS Performance Monitoring Toolkit
+        </div>
+
+
+      </footer>
+
+    </main>
+
+  </div>
+
+
+  <!-- JAVASCRIPT -->
+
+  <script src="../js/app.js"></script>
+
+</body>
+
+</html>
