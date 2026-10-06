@@ -1,121 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Position Window | GNSS Toolkit</title>
-
+  <title>Position window</title>
   <link rel="stylesheet" href="../css/style.css">
 
   <style>
-    /* =========================
-   FOOTER
-   ========================= */
+    /* =========================================================
+       Professional material blue theme (#1976d2)
+       ========================================================= */
+    :root {
+      --position-blue: #1976d2;
+      --position-blue-dark: #1565c0;
+      --position-blue-light: #e3f2fd;
+      --position-blue-border: #bbdefb;
+      --position-blue-text: #0d47a1;
+    }
 
-footer {
-    width: 100%;
-    margin-top: auto;
-    min-height: 64px;
-    padding: 12px 28px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-
-    background: #072037;
-    border-top: 2px solid #009677;
-
-    color: #b7c7d7;
-    font-size: 0.78rem;
-    line-height: 1.4;
-
-    box-shadow: 0 -4px 15px rgba(7, 32, 55, 0.08);
-}
-
-footer span {
-    display: block;
-    white-space: nowrap;
-}
-
-footer span:first-child {
-    color: #94a9bf;
-    font-weight: 500;
-}
-
-footer span:nth-child(2) {
-    color: #ffffff;
-    font-weight: 600;
-    letter-spacing: 0.2px;
-}
-
-footer span:last-child {
-    color: #94a9bf;
-    text-align: right;
-    font-weight: 500;
-}
-
-
-/* =========================
-   RESPONSIVE FOOTER
-   ========================= */
-
-@media (max-width: 768px) {
+    /* =========================================================
+       Footer
+       ========================================================= */
     footer {
-        min-height: auto;
-        padding: 14px 18px;
-        flex-direction: column;
-        justify-content: center;
-        text-align: center;
-        gap: 6px;
+      width: 100%;
+      margin-top: auto;
+      min-height: 64px;
+      padding: 12px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      background: #072037;
+      border-top: 2px solid #1976d2;
+      color: #b7c7d7;
+      font-size: 0.78rem;
+      line-height: 1.4;
+      box-shadow: 0 -4px 15px rgba(7, 32, 55, 0.08);
     }
 
     footer span {
-        white-space: normal;
-        text-align: center !important;
+      display: block;
+      white-space: nowrap;
     }
-}
 
-@media (max-width: 480px) {
-    footer {
-        padding: 12px 14px;
-        font-size: 0.72rem;
+    footer span:first-child {
+      color: #94a9bf;
+      font-weight: 500;
     }
-}
+
+    footer span:nth-child(2) {
+      color: #ffffff;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+    }
+
+    footer span:last-child {
+      color: #94a9bf;
+      text-align: right;
+      font-weight: 500;
+    }
 
     /* =========================================================
-       POSITION PAGE - PROFESSIONAL CENTERED LAYOUT
+       Position page
        ========================================================= */
-
     .position-wrapper {
       width: 100%;
       max-width: 1150px;
       margin: 0 auto;
-      padding: 10px 20px 35px;
+      padding: 10px 20px 25px;
     }
 
-    /* Main Position Container */
+    /* =========================================================
+       Main position container
+       ========================================================= */
     .position-container {
       width: 100%;
       background: #ffffff;
-      border: 1px solid #dfe7ec;
+      border: 1px solid var(--position-blue-border);
       border-radius: 16px;
       padding: 28px;
-      box-shadow: 0 8px 28px rgba(16, 36, 62, 0.08);
+      box-shadow: 0 8px 28px rgba(25, 118, 210, 0.12);
     }
 
-    /* Page Heading */
+    /* =========================================================
+       Page heading
+       ========================================================= */
     .position-heading {
       text-align: center;
       margin-bottom: 28px;
       padding-bottom: 20px;
-      border-bottom: 1px solid #e5ebef;
+      border-bottom: 1px solid #e1e9f2;
     }
 
     .position-heading h2 {
       margin: 0 0 8px;
-      color: #10243e;
+      color: var(--position-blue-text);
       font-size: 1.7rem;
       font-weight: 700;
     }
@@ -127,9 +106,8 @@ footer span:last-child {
     }
 
     /* =========================================================
-       QUICK STATS
+       Quick stats
        ========================================================= */
-
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -138,8 +116,8 @@ footer span:last-child {
     }
 
     .stat {
-      background: #f8fbfc;
-      border: 1px solid #dce7eb;
+      background: #f7faff;
+      border: 1px solid var(--position-blue-border);
       border-radius: 12px;
       padding: 18px;
       text-align: center;
@@ -149,32 +127,31 @@ footer span:last-child {
 
     .stat:hover {
       transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(16, 36, 62, 0.08);
-      border-color: #b9d9d4;
+      box-shadow: 0 5px 15px rgba(25, 118, 210, 0.15);
+      border-color: #90caf9;
     }
 
-    .stat small {
+    .stat small,
+    .stat .label {
       display: block;
       color: #667789;
       font-size: 0.78rem;
       font-weight: 600;
       margin-bottom: 8px;
-      text-transform: uppercase;
       letter-spacing: 0.4px;
     }
 
     .stat strong {
       display: block;
-      color: #10243e;
+      color: var(--position-blue-text);
       font-size: 1.05rem;
       font-weight: 700;
       overflow-wrap: anywhere;
     }
 
     /* =========================================================
-       POSITION SECTIONS
+       Position sections
        ========================================================= */
-
     .pos-section {
       display: flex;
       flex-direction: column;
@@ -183,22 +160,23 @@ footer span:last-child {
 
     .pos-card {
       background: #ffffff;
-      border: 1px solid #dfe7ec;
+      border: 1px solid #d9e4ef;
       border-radius: 12px;
       padding: 22px 24px;
     }
 
+    /* =========================================================
+       Card headings
+       ========================================================= */
     .pos-card h4 {
       display: flex;
       align-items: center;
       gap: 10px;
       margin: 0 0 16px;
       padding-bottom: 12px;
-      border-bottom: 1px solid #e8eef1;
-
-      color: #0d9488;
+      border-bottom: 1px solid #e3eaf1;
+      color: var(--position-blue);
       font-size: 0.88rem;
-      text-transform: uppercase;
       letter-spacing: 0.6px;
       font-weight: 700;
     }
@@ -207,15 +185,14 @@ footer span:last-child {
       content: "";
       width: 4px;
       height: 18px;
-      background: #0d9488;
+      background: var(--position-blue);
       border-radius: 4px;
       display: inline-block;
     }
 
     /* =========================================================
-       DATA TABLE
+       Data table
        ========================================================= */
-
     .data-table {
       width: 100%;
       border-collapse: collapse;
@@ -224,7 +201,7 @@ footer span:last-child {
     .data-table td {
       padding: 11px 10px;
       font-size: 0.94rem;
-      border-bottom: 1px solid #f0f4f6;
+      border-bottom: 1px solid #edf2f6;
       vertical-align: middle;
     }
 
@@ -239,7 +216,7 @@ footer span:last-child {
     }
 
     .data-table .value {
-      color: #10243e;
+      color: var(--position-blue-text);
       font-weight: 700;
     }
 
@@ -251,15 +228,14 @@ footer span:last-child {
     }
 
     .highlight-val {
-      color: #0d9488 !important;
+      color: var(--position-blue) !important;
       font-size: 1.15rem;
       font-weight: 700;
     }
 
     /* =========================================================
-       EPOCH GRID
+       Epoch grid
        ========================================================= */
-
     .epoch-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -267,56 +243,132 @@ footer span:last-child {
     }
 
     .epoch-item {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
+      background: #f7faff;
+      border: 1px solid #dce6f0;
       border-radius: 9px;
       padding: 14px 16px;
       min-width: 0;
     }
 
-    .epoch-item small {
+    .epoch-item small,
+    .epoch-item .label {
       display: block;
       color: #64748b;
       font-size: 0.76rem;
       font-weight: 600;
       margin-bottom: 6px;
-      text-transform: uppercase;
       letter-spacing: 0.3px;
     }
 
     .epoch-item strong {
-      color: #10243e;
+      color: var(--position-blue-text);
       font-size: 0.94rem;
       font-weight: 700;
       overflow-wrap: anywhere;
     }
 
     /* =========================================================
-       BACK BUTTON ROW
+       Home + back buttons (#1976d2)
        ========================================================= */
-
-    .back-row {
-      max-width: 1150px;
-      margin: 0 auto 15px;
-      padding: 0 20px;
+    .bottom-navigation {
       display: flex;
-      gap: 10px;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 12px;
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid #dfe7ec;
     }
 
-    .back-btn {
+    .bottom-nav-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 100px;
+      height: 40px;
+      padding: 0 18px;
+      border-radius: 6px;
+      background: #1976d2;
+      border: 1px solid #1565c0;
+      color: #ffffff;
       text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
       cursor: pointer;
+      box-sizing: border-box;
+      transition: all 0.2s ease;
+      box-shadow: 0 3px 8px rgba(25, 118, 210, 0.2);
     }
 
-    
+    .bottom-nav-btn:hover {
+      background: #1565c0;
+      border-color: #0d47a1;
+      transform: translateY(-1px);
+      box-shadow: 0 5px 12px rgba(25, 118, 210, 0.3);
+    }
+
+    .position-bottom-navigation {
+      max-width: 1150px;
+      margin: 10px auto 0;
+      padding: 0 20px 25px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    .position-nav-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 105px;
+      padding: 10px 18px;
+      border: 1px solid #1565c0;
+      border-radius: 7px;
+      background: #1976d2;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 3px 8px rgba(25, 118, 210, 0.2);
+    }
+
+    .position-nav-btn:hover {
+      background: #1565c0;
+      border-color: #0d47a1;
+      transform: translateY(-1px);
+      box-shadow: 0 5px 12px rgba(25, 118, 210, 0.3);
+    }
+
+    .position-nav-btn:active,
+    .bottom-nav-btn:active {
+      transform: translateY(0);
+    }
+
     /* =========================================================
-       MOBILE
+       Responsive breakpoints
        ========================================================= */
+    @media (max-width: 768px) {
+      footer {
+        min-height: auto;
+        padding: 14px 18px;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        gap: 6px;
+      }
+
+      footer span {
+        white-space: normal;
+        text-align: center !important;
+      }
+    }
 
     @media (max-width: 600px) {
-
       .position-wrapper {
-        padding: 5px 10px 25px;
+        padding: 5px 10px 15px;
       }
 
       .position-container {
@@ -378,24 +430,23 @@ footer span:last-child {
         grid-template-columns: 1fr;
       }
 
-      .back-row {
-        padding: 0 10px;
-        flex-wrap: wrap;
+      .position-bottom-navigation {
+        padding: 0 10px 20px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
       }
 
-      /* =====================================================
-         MOBILE FOOTER
-         ===================================================== */
+      .position-nav-btn {
+        width: 100%;
+      }
 
       footer {
         min-height: auto;
         padding: 16px 12px;
-
-        display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-
         text-align: center;
         gap: 7px;
       }
@@ -419,12 +470,7 @@ footer span:last-child {
       }
     }
 
-    /* =========================================================
-       SMALL MOBILE
-       ========================================================= */
-
     @media (max-width: 380px) {
-
       .position-container {
         padding: 12px;
       }
@@ -445,6 +491,11 @@ footer span:last-child {
         font-size: 0.84rem;
       }
 
+      .position-nav-btn {
+        font-size: 0.82rem;
+        padding: 9px 14px;
+      }
+
       footer {
         padding: 14px 10px;
         gap: 6px;
@@ -455,305 +506,174 @@ footer span:last-child {
       }
     }
   </style>
-
 </head>
 
 <body>
+  <div class="app-shell">
 
-<div class="app-shell">
-
-  <!-- SIDEBAR -->
-
-  <aside class="sidebar" id="sidebar">
-
-    <div class="sidebar-brand">
-      <div class="brand-mark">GNSS</div>
-
-      <div>
-        <strong>GNSS Toolkit</strong>
-        <small>Performance Monitor</small>
-      </div>
-    </div>
-
-    <nav class="sidebar-nav">
-
-      <a class="nav-item" href="../index.html">
-        <span>⌂</span>Home
-      </a>
-
-      <a class="nav-item" href="configuration.html">
-        <span>⚙</span>Configuration Setting
-      </a>
-
-      <a class="nav-item active" href="position.html">
-        <span>◎</span>Position Window
-      </a>
-
-      <a class="nav-item" href="sky-view.html">
-        <span>◉</span>Sky View
-      </a>
-
-      <a class="nav-item" href="dop.html">
-        <span>▥</span>Dilution of Precision
-      </a>
-
-      <a class="nav-item" href="plan-view.html">
-        <span>⌖</span>Plan View
-      </a>
-
-      <a class="nav-item" href="signal-tracking.html">
-        <span>⌁</span>Signal Tracking
-      </a>
-
-      <a class="nav-item" href="integrity.html">
-        <span>◫</span>Integrity Graphs
-      </a>
-
-      <a class="nav-item" href="aviation.html">
-        <span>✈</span>Aviation Graphs
-      </a>
-
-    </nav>
-
-   
-
-  </aside>
-
-
-  <!-- MAIN CONTENT -->
-
-  <main class="main-content">
-
-    <!-- TOPBAR -->
-
-    <header class="topbar">
-
-      <button class="menu-btn" onclick="toggleSidebar()">☰</button>
-
-      <div>
-        <div class="breadcrumb">GNSS / Position Window</div>
-        <h1>Position Window</h1>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-mark">GPMS</div>
+        <div>
+          <strong>Gpms</strong>
+          <small>Performance monitor</small>
+        </div>
       </div>
 
-      <button class="exit-btn" onclick="handleExit()">Exit</button>
-
-    </header>
-
-
-    <!-- PAGE CONTENT -->
-
-    <div class="page-content">
-
-      <!-- NAVIGATION -->
-
-      <div class="back-row">
-
-        <a class="back-btn" href="../index.html">
-          ← Home
+      <nav class="sidebar-nav">
+        <a class="nav-item" href="../index.html">
+          <span>⌂</span>Home
         </a>
+        <a class="nav-item" href="configuration.html">
+          <span>⚙</span>Configuration setting
+        </a>
+        <a class="nav-item active" href="position.html">
+          <span>◎</span>Position window
+        </a>
+        <a class="nav-item" href="sky-view.html">
+          <span>◉</span>Sky view
+        </a>
+        <a class="nav-item" href="dop.html">
+          <span>▥</span>Dilution of precision
+        </a>
+        <a class="nav-item" href="plan-view.html">
+          <span>⌖</span>Plan view
+        </a>
+        <a class="nav-item" href="signal-tracking.html">
+          <span>⌁</span>Signal tracking
+        </a>
+        <a class="nav-item" href="integrity.html">
+          <span>◫</span>Integrity graphs
+        </a>
+        <a class="nav-item" href="aviation.html">
+          <span>✈</span>Aviation graphs
+        </a>
+      </nav>
+    </aside>
 
-        <button class="back-btn" onclick="history.back()">
-          ← Back
-        </button>
+    <!-- Main content -->
+    <main class="main-content">
 
-      </div>
-
-
-      <!-- CENTERED POSITION CONTAINER -->
-
-      <div class="position-wrapper">
-
-        <div class="position-container">
-
-          <!-- TITLE -->
-
-          <div class="position-heading">
-
-            <h2>02. Position Window</h2>
-
-            <p>
-              Monitor GNSS position, altitude, solution status, and epoch timing.
-            </p>
-
+      <!-- Topbar -->
+      <header class="topbar">
+        <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+        <div>
+          <div class="breadcrumb" style="color:#1e4f8a;">
+            GPMS / Position window
           </div>
+          <h1>Position window</h1>
+        </div>
+      </header>
 
+      <!-- Page content -->
+      <div class="page-content">
+        <div class="position-wrapper">
+          <div class="position-container">
 
-          <!-- QUICK COORDINATE HIGHLIGHTS -->
-
-          <div class="stats-grid">
-
-            <div class="stat">
-              <small>Latitude</small>
-              <strong id="disp-lat">
-                24.94605283558
-              </strong>
+            <!-- Page heading -->
+            <div class="position-heading">
+              <h3>Monitor GNSS position, altitude, solution status, and epoch timing.</h3>
             </div>
 
-            <div class="stat">
-              <small>Longitude</small>
-              <strong id="disp-lon">
-                67.13613383441
-              </strong>
+            <!-- Quick coordinate highlights -->
+            <div class="stats-grid">
+              <div class="stat">
+                <span class="label">Latitude</span>
+                <strong id="disp-lat">24.94605283558</strong>
+              </div>
+
+              <div class="stat">
+                <span class="label">Longitude</span>
+                <strong id="disp-lon">67.13613383441</strong>
+              </div>
+
+              <div class="stat">
+                <span class="label">Height / altitude</span>
+                <strong id="disp-height">49.4106 m</strong>
+              </div>
+
+              <div class="stat">
+                <span class="label">Satellites used</span>
+                <strong id="disp-sats" style="color:#1e4f8a;">21</strong>
+              </div>
             </div>
 
-            <div class="stat">
-              <small>Height / Altitude</small>
-              <strong id="disp-height">
-                49.4106 m
-              </strong>
-            </div>
+            <!-- Position data sections -->
+            <div class="pos-section">
 
-            <div class="stat">
-              <small>Satellites Used</small>
-              <strong id="disp-sats" style="color:#0d9488;">
-                21
-              </strong>
-            </div>
+              <!-- Solution status -->
+              <div class="pos-card">
+                <h4>Solution status &amp; satellites</h4>
+                <table class="data-table">
+                  <tbody>
+                    <tr>
+                      <td class="label">Solution status :</td>
+                      <td class="value">Solution computed</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td class="label">Position type :</td>
+                      <td class="value">Single</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td class="label"># of satellites used in solution :</td>
+                      <td class="value highlight-val">21</td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
 
-          </div>
+              <!-- Epoch & timing -->
+              <div class="pos-card">
+                <h4>Epoch &amp; timing</h4>
+                <div class="epoch-grid">
+                  <div class="epoch-item">
+                    <span class="label">Starting epoch (UTC)</span>
+                    <strong>1/4/2017 1:00:00 AM</strong>
+                  </div>
 
+                  <div class="epoch-item">
+                    <span class="label">Elapsed time</span>
+                    <strong>0:0:0:0</strong>
+                  </div>
 
-          <!-- POSITION DATA SECTIONS -->
+                  <div class="epoch-item">
+                    <span class="label">Current epoch (UTC)</span>
+                    <strong>1/4/2017 1:59:59 AM</strong>
+                  </div>
 
-          <div class="pos-section">
-
-
-            <!-- COORDINATES -->
-
-            <div class="pos-card">
-
-              <h4>Coordinates &amp; Tolerances</h4>
-
-              <table class="data-table">
-
-                <tbody>
-
-                  <tr>
-                    <td class="label">Latitude :</td>
-                    <td class="value">24.94605283558</td>
-                    <td class="tolerance">+/- 1.2299</td>
-                  </tr>
-
-                  <tr>
-                    <td class="label">Longitude :</td>
-                    <td class="value">67.13613383441</td>
-                    <td class="tolerance">+/- 1.0432</td>
-                  </tr>
-
-                  <tr>
-                    <td class="label">Height :</td>
-                    <td class="value">49.4106</td>
-                    <td class="tolerance">+/- 2.3301</td>
-                  </tr>
-
-                </tbody>
-
-              </table>
-
-            </div>
-
-
-            <!-- SOLUTION STATUS -->
-
-            <div class="pos-card">
-
-              <h4>Solution Status &amp; Satellites</h4>
-
-              <table class="data-table">
-
-                <tbody>
-
-                  <tr>
-                    <td class="label">Solution Status :</td>
-                    <td class="value">Solution Computed</td>
-                    <td></td>
-                  </tr>
-
-                  <tr>
-                    <td class="label">Position Type :</td>
-                    <td class="value">Single</td>
-                    <td></td>
-                  </tr>
-
-                  <tr>
-                    <td class="label">
-                      # of Satellites Used in Solution :
-                    </td>
-
-                    <td class="value highlight-val">
-                      21
-                    </td>
-
-                    <td></td>
-                  </tr>
-
-                </tbody>
-
-              </table>
-
-            </div>
-
-
-            <!-- EPOCH -->
-
-            <div class="pos-card">
-
-              <h4>Epoch &amp; Timing</h4>
-
-              <div class="epoch-grid">
-
-                <div class="epoch-item">
-                  <small>Starting Epoch (UTC)</small>
-                  <strong>
-                    1/4/2017 1:00:00 AM
-                  </strong>
+                  <div class="epoch-item">
+                    <span class="label">Current epoch (Local)</span>
+                    <strong>1/4/2017 6:59:59 AM</strong>
+                  </div>
                 </div>
-
-                <div class="epoch-item">
-                  <small>Elapsed Time</small>
-                  <strong>
-                    0:0:0:0
-                  </strong>
-                </div>
-
-                <div class="epoch-item">
-                  <small>Current Epoch (UTC)</small>
-                  <strong>
-                    1/4/2017 1:59:59 AM
-                  </strong>
-                </div>
-
-                <div class="epoch-item">
-                  <small>Current Epoch (Local)</small>
-                  <strong>
-                    1/4/2017 6:59:59 AM
-                  </strong>
-                </div>
-
               </div>
 
             </div>
 
+            <!-- Bottom navigation -->
+            <div class="bottom-navigation">
+              <a class="bottom-nav-btn" href="../index.html">Home</a>
+              <button class="bottom-nav-btn" onclick="history.back()">Back</button>
+            </div>
+
           </div>
-
         </div>
-
       </div>
 
-    </div>
+      <!-- Footer -->
+      <footer>
+        <span>Rx • Logging • Error</span>
+        <span>Copyright @SUP</span>
+        <span>GNSS performance monitoring toolkit</span>
+      </footer>
 
+    </main>
+  </div>
 
-    <!-- FOOTER -->
-
-   <footer><span>Rx • Logging • Error</span><span>Copyright @SUP</span><span>GNSS Performance Monitoring Toolkit</span></footer></main></div>
-
-  </main>
-
-</div>
-
-
-<script src="../js/app.js"></script>
-
+  <script src="../js/app.js"></script>
 </body>
-
 </html>

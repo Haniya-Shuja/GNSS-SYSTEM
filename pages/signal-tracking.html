@@ -2,353 +2,133 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Signal Tracking Status | GNSS Toolkit</title>
-
-  <link rel="stylesheet" href="../css/style.css">
-
-  <style>
-    /* =====================================================
-       SIGNAL TRACKING STATUS
-       ===================================================== */
-
-    .tracking-container {
-      width: 100%;
-      margin-top: 20px;
-    }
-
-    .tracking-panel {
-      background: #ffffff;
-      border: 1px solid #dfe7ec;
-      border-radius: 10px;
-      padding: 24px;
-      box-shadow: 0 4px 14px rgba(16, 36, 62, 0.06);
-    }
 
-    .tracking-panel h3 {
-      margin: 0 0 6px;
-      color: #182b3c;
-      font-size: 17px;
-    }
-
-    .tracking-description {
-      margin: 0 0 22px;
-      color: #667789;
-      font-size: 13px;
-    }
-
-    /* =====================================================
-       RADIO BUTTONS
-       ===================================================== */
-
-    .tracking-options {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 12px;
-      margin-bottom: 25px;
-    }
-
-    .tracking-option {
-      position: relative;
-    }
-
-    .tracking-option input {
-      position: absolute;
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .tracking-option label {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-
-      min-height: 52px;
-      padding: 10px 13px;
-
-      border: 1px solid #dce5ea;
-      border-radius: 8px;
-
-      background: #f9fbfc;
-      color: #405467;
-
-      font-size: 12px;
-      font-weight: 600;
-
-      cursor: pointer;
-
-      transition:
-        border-color 0.2s ease,
-        background 0.2s ease,
-        color 0.2s ease,
-        box-shadow 0.2s ease;
-    }
-
-    .tracking-option label:hover {
-      border-color: #0d9f7a;
-    }
-
-    /* Radio circle */
-
-    .radio-circle {
-      width: 16px;
-      height: 16px;
-
-      min-width: 16px;
-
-      border: 2px solid #9aaab5;
-      border-radius: 50%;
-
-      position: relative;
-      background: #ffffff;
-    }
-
-    .tracking-option input:checked + label {
-      border-color: #0d9f7a;
-      background: rgba(13, 159, 122, 0.07);
-      color: #08765c;
-      box-shadow: 0 3px 10px rgba(13, 159, 122, 0.08);
-    }
-
-    .tracking-option input:checked + label .radio-circle {
-      border-color: #0d9f7a;
-    }
-
-    .tracking-option input:checked + label .radio-circle::after {
-      content: "";
-
-      position: absolute;
-
-      width: 7px;
-      height: 7px;
-
-      border-radius: 50%;
-
-      background: #0d9f7a;
-
-      top: 50%;
-      left: 50%;
-
-      transform: translate(-50%, -50%);
-    }
-
-    /* =====================================================
-       ACTIVE PARAMETER DISPLAY
-       ===================================================== */
-
-    .tracking-display {
-      border: 1px solid #dfe7ec;
-      border-radius: 9px;
-      background: #f8fafb;
-      padding: 20px;
-
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      gap: 20px;
-    }
-
-    .tracking-current {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .tracking-current-label {
-      color: #7a8995;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .tracking-current-name {
-      color: #182b3c;
-      font-size: 18px;
-      font-weight: 700;
-    }
-
-    .tracking-value {
-      text-align: right;
-    }
-
-    .tracking-value strong {
-      display: block;
-      color: #0d9f7a;
-      font-size: 26px;
-      line-height: 1.2;
-    }
-
-    .tracking-value small {
-      color: #667789;
-      font-size: 11px;
-    }
-
-    .tracking-status {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-
-      margin-top: 8px;
-
-      color: #0d9f7a;
-      font-size: 11px;
-      font-weight: 600;
-    }
-
-    .tracking-status-dot {
-      width: 7px;
-      height: 7px;
-
-      border-radius: 50%;
-
-      background: #0d9f7a;
-
-      box-shadow:
-        0 0 0 3px rgba(13, 159, 122, 0.12);
-    }
-
-    /* =====================================================
-       CONSTELLATION
-       ===================================================== */
-
-    .constellation-panel {
-      margin-top: 20px;
-    }
-
-    .constellation-panel h3 {
-      margin-bottom: 6px;
-    }
-
-    .constellation-panel p {
-      margin: 0 0 16px;
-      color: #667789;
-      font-size: 13px;
-    }
-
-    /* =====================================================
-       RESPONSIVE
-       ===================================================== */
-
-    @media (max-width: 1100px) {
-
-      .tracking-options {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-    }
-
-    @media (max-width: 700px) {
-
-      .tracking-panel {
-        padding: 17px;
-      }
-
-      .tracking-options {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .tracking-display {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .tracking-value {
-        text-align: left;
-      }
-
-    }
-
-    @media (max-width: 480px) {
-
-      .tracking-options {
-        grid-template-columns: 1fr;
-      }
-
-      .tracking-option label {
-        min-height: 48px;
-      }
-
-      .tracking-current-name {
-        font-size: 16px;
-      }
-
-      .tracking-value strong {
-        font-size: 22px;
-      }
-
-    }
-    
-/* =========================================================
-   PROFESSIONAL FOOTER
-   ========================================================= */
-
-footer {
-    width: 100%;
-    margin-top: auto;
-    min-height: 64px;
-    padding: 12px 28px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-
-    background: #072037;
-    border-top: 2px solid #009677;
-
-    color: #b7c7d7;
-    font-size: 0.78rem;
-    line-height: 1.4;
-
-    box-shadow: 0 -4px 15px rgba(7, 32, 55, 0.08);
-}
-
-footer span {
-    display: block;
-    white-space: nowrap;
-}
-
-footer span:first-child {
-    color: #94a9bf;
-    font-weight: 500;
-}
-
-footer span:nth-child(2) {
-    color: #ffffff;
-    font-weight: 600;
-    letter-spacing: 0.2px;
-}
-
-footer span:last-child {
-    color: #94a9bf;
-    text-align: right;
-    font-weight: 500;
-}
-
-/* Footer responsive */
-@media (max-width: 600px) {
-    footer {
-        min-height: 90px;
-        padding: 14px 16px;
-        flex-direction: column;
-        justify-content: center;
-        text-align: center;
-        gap: 5px;
-    }
-
-    footer span {
-        white-space: normal;
-        text-align: center !important;
-    }
-}
-
-
-  </style>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Signal Tracking Status | GPMS</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css">
+
+    <!-- =====================================================
+         GRAPH STYLES (new - all classes prefixed "sg-")
+         ===================================================== -->
+    <style>
+        .sg-section {
+            margin-top: 24px;
+        }
+
+        .sg-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .sg-header h3 {
+            margin: 0;
+        }
+
+        .sg-summary {
+            font-size: 13px;
+            opacity: .75;
+        }
+
+        .sg-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+
+        .sg-tab {
+            padding: 7px 16px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            background: #ffffff;
+            color: #1f2937;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .sg-tab:hover {
+            background: #f1f5f9;
+        }
+
+        .sg-tab.active {
+            background: #1f2937;
+            border-color: #1f2937;
+            color: #ffffff;
+        }
+
+        .sg-tab:focus-visible {
+            outline: 2px solid #2563eb;
+            outline-offset: 2px;
+        }
+
+        /* WHITE GRAPH BACKGROUND */
+        .sg-chart-box {
+            background: #ffffff;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 16px;
+            color: #1f2937;
+        }
+
+        .sg-chart-title {
+            text-align: center;
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 8px;
+            color: #111827;
+        }
+
+        .sg-svg-wrap {
+            overflow-x: auto;
+        }
+
+        .sg-svg-wrap svg {
+            display: block;
+            width: 100%;
+            min-width: 520px;
+            height: auto;
+            background: #ffffff;
+        }
+
+        .sg-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 18px;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #e5e7eb;
+            font-size: 13px;
+            color: #1f2937;
+        }
+
+        .sg-legend-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .sg-legend-swatch {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+            display: inline-block;
+        }
+    </style>
 
 </head>
+
 
 
 <body>
@@ -356,422 +136,580 @@ footer span:last-child {
 <div class="app-shell">
 
 
-  <!-- =====================================================
-       SIDEBAR
-       ===================================================== -->
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
 
-  <aside class="sidebar" id="sidebar">
+    <aside class="sidebar" id="sidebar">
 
-    <div class="sidebar-brand">
+        <div class="sidebar-brand">
 
-      <div class="brand-mark">
-        GNSS
-      </div>
+            <div class="brand-mark">
+                GPMS
+            </div>
 
-      <div>
-        <strong>GNSS Toolkit</strong>
-        <small>Performance Monitor</small>
-      </div>
+            <div>
 
-    </div>
+                <strong>GPMS</strong>
 
+                <small>
+                    Performance Monitor
+                </small>
 
-    <nav class="sidebar-nav">
+            </div>
 
-      <a class="nav-item" href="../index.html">
-        <span>⌂</span>
-        Home
-      </a>
-
-      <a class="nav-item" href="configuration.html">
-        <span>⚙</span>
-        Configuration Setting
-      </a>
-
-      <a class="nav-item" href="position.html">
-        <span>◎</span>
-        Position Window
-      </a>
-
-      <a class="nav-item" href="sky-view.html">
-        <span>◉</span>
-        Sky View
-      </a>
-
-      <a class="nav-item" href="dop.html">
-        <span>▥</span>
-        Dilution of Precision
-      </a>
-
-      <a class="nav-item" href="plan-view.html">
-        <span>⌖</span>
-        Plan View
-      </a>
-
-      <a class="nav-item active" href="signal-tracking.html">
-        <span>⌁</span>
-        Signal Tracking
-      </a>
-
-      <a class="nav-item" href="integrity.html">
-        <span>◫</span>
-        Integrity Graphs
-      </a>
-
-      <a class="nav-item" href="aviation.html">
-        <span>✈</span>
-        Aviation Graphs
-      </a>
-
-    </nav>
-
-
-  
-
-  </aside>
-
-
-  <!-- =====================================================
-       MAIN CONTENT
-       ===================================================== -->
-
-  <main class="main-content">
-
-
-    <!-- TOP BAR -->
-
-    <header class="topbar">
-
-      <button
-        class="menu-btn"
-        onclick="toggleSidebar()">
-        ☰
-      </button>
-
-
-      <div>
-
-        <div class="breadcrumb">
-          GNSS / Signal Tracking Status
         </div>
 
-        <h1>
-          Signal Tracking Status
-        </h1>
 
-      </div>
+        <!-- SIDEBAR NAVIGATION -->
 
+        <nav class="sidebar-nav">
 
-      <button
-        class="exit-btn"
-        onclick="handleExit()">
-        Exit
-      </button>
+            <a
+                class="nav-item"
+                href="../index.html">
 
-    </header>
+                <span>⌂</span>
 
+                <label>
+                    Home
+                </label>
 
-    <div class="page-content">
-
-
-      <!-- BACK BUTTONS -->
-
-      <div class="back-row">
-
-        <a
-          class="back-btn"
-          href="../index.html">
-          ← Home
-        </a>
-
-        <button
-          class="back-btn"
-          onclick="history.back()">
-          ← Back
-        </button>
-
-      </div>
+            </a>
 
 
-      <!-- PAGE TITLE -->
+            <a
+                class="nav-item"
+                href="configuration.html">
 
-      <div class="page-title">
+                <span>⚙</span>
 
-        <h2>
-          06. Signal Tracking Status
-        </h2>
+                <label>
+                    Configuration Setting
+                </label>
 
-        <p>
-          Monitor signal quality and tracking parameters.
-        </p>
-
-      </div>
+            </a>
 
 
-      <!-- =================================================
-           SIGNAL TRACKING
-           ================================================= -->
+            <a
+                class="nav-item"
+                href="position.html">
 
-      <div class="tracking-container">
+                <span>◎</span>
 
+                <label>
+                    Position Window
+                </label>
 
-        <div class="tracking-panel">
-
-          <h3>
-            Signal Tracking Status
-          </h3>
-
-          <p class="tracking-description">
-            Select a tracking parameter to view its current GNSS status.
-          </p>
+            </a>
 
 
-          <!-- =================================================
-               RADIO BUTTONS
-               ================================================= -->
+            <a
+                class="nav-item"
+                href="sky-view.html">
 
-          <div class="tracking-options">
+                <span>◉</span>
 
+                <label>
+                    Sky View
+                </label>
 
-            <!-- Carrier / Noise Ratio -->
-
-            <div class="tracking-option">
-
-              <input
-                type="radio"
-                name="trackingParameter"
-                id="cnr"
-                value="cnr"
-                checked
-                onchange="changeTrackingParameter('cnr')">
-
-              <label for="cnr">
-
-                <span class="radio-circle"></span>
-
-                Carrier/Noise Ratio
-
-              </label>
-
-            </div>
+            </a>
 
 
-            <!-- Pseudo Range -->
+            <a
+                class="nav-item"
+                href="dop.html">
 
-            <div class="tracking-option">
+                <span>▥</span>
 
-              <input
-                type="radio"
-                name="trackingParameter"
-                id="pseudo"
-                value="pseudo"
-                onchange="changeTrackingParameter('pseudo')">
+                <label>
+                    Dilution of Precision
+                </label>
 
-              <label for="pseudo">
-
-                <span class="radio-circle"></span>
-
-                Pseudo Range
-
-              </label>
-
-            </div>
+            </a>
 
 
-            <!-- Carrier Phase -->
+            <a
+                class="nav-item"
+                href="plan-view.html">
 
-            <div class="tracking-option">
+                <span>⌖</span>
 
-              <input
-                type="radio"
-                name="trackingParameter"
-                id="carrier"
-                value="carrier"
-                onchange="changeTrackingParameter('carrier')">
+                <label>
+                    Plan View
+                </label>
 
-              <label for="carrier">
-
-                <span class="radio-circle"></span>
-
-                Carrier Phase
-
-              </label>
-
-            </div>
+            </a>
 
 
-            <!-- Doppler -->
+            <a
+                class="nav-item active"
+                href="signal-tracking.html">
 
-            <div class="tracking-option">
+                <span>⌁</span>
 
-              <input
-                type="radio"
-                name="trackingParameter"
-                id="doppler"
-                value="doppler"
-                onchange="changeTrackingParameter('doppler')">
+                <label>
+                    Signal Tracking
+                </label>
 
-              <label for="doppler">
+            </a>
 
-                <span class="radio-circle"></span>
 
-                Doppler
+            <a
+                class="nav-item"
+                href="integrity.html">
 
-              </label>
+                <span>◫</span>
+
+                <label>
+                    Integrity Graphs
+                </label>
+
+            </a>
+
+
+            <a
+                class="nav-item"
+                href="aviation.html">
+
+                <span>✈</span>
+
+                <label>
+                    Aviation Graphs
+                </label>
+
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-footer"></div>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <button
+                class="menu-btn"
+                onclick="toggleSidebar()"
+                aria-label="Open navigation">
+
+                ☰
+
+            </button>
+
+
+            <div class="topbar-title">
+
+                <div class="breadcrumb">
+                    GPMS / SIGNAL TRACKING STATUS
+                </div>
+
+                <h1>
+                    Signal Tracking Status
+                </h1>
 
             </div>
 
 
-            <!-- Lock Time -->
+            <!-- <button
+                class="exit-btn"
+                onclick="handleExit()">
 
-            <div class="tracking-option">
+                Exit
 
-              <input
-                type="radio"
-                name="trackingParameter"
-                id="lock"
-                value="lock"
-                onchange="changeTrackingParameter('lock')">
+            </button> -->
 
-              <label for="lock">
+        </header>
 
-                <span class="radio-circle"></span>
-
-                Lock Time
-
-              </label>
-
-            </div>
-
-
-          </div>
-
-
-          <!-- =================================================
-               ACTIVE PARAMETER
-               ================================================= -->
-
-          <div class="tracking-display">
-
-
-            <div class="tracking-current">
-
-              <span class="tracking-current-label">
-                Selected Parameter
-              </span>
-
-              <span
-                class="tracking-current-name"
-                id="parameterName">
-                Carrier/Noise Ratio
-              </span>
-
-              <span class="tracking-status">
-
-                <span class="tracking-status-dot"></span>
-
-                Signal Tracking Active
-
-              </span>
-
-            </div>
-
-
-            <div class="tracking-value">
-
-              <strong id="parameterValue">
-                42.6
-              </strong>
-
-              <small id="parameterUnit">
-                dB-Hz
-              </small>
-
-            </div>
-
-
-          </div>
-
-        </div>
 
 
         <!-- =================================================
-             CONSTELLATION COVERAGE
+             PAGE CONTENT
              ================================================= -->
 
-        <div
-          class="panel constellation-panel">
-
-          <h3>
-            Constellation Coverage
-          </h3>
-
-          <p>
-            Currently monitored GNSS constellations.
-          </p>
+        <div class="page-content">
 
 
-          <div class="chips">
+            <!-- PAGE TITLE -->
 
-            <span class="chip">
-              GPS
-            </span>
+            <div class="page-title">
 
-            <span class="chip">
-              GLONASS
-            </span>
+               <h2> Monitor signal quality and tracking parameters.
+                </h2>
 
-            <span class="chip">
-              BeiDou
-            </span>
+              
 
-            <span class="chip">
-              Galileo
-            </span>
+            </div>
 
-            <span class="chip">
-              QZSS
-            </span>
 
-            <span class="chip">
-              SBAS
-            </span>
 
-          </div>
+            <!-- =================================================
+                 SIGNAL TRACKING
+                 ================================================= -->
+
+            <div class="tracking-container">
+
+
+                <!-- TRACKING PANEL -->
+
+                <div class="tracking-panel">
+
+                    <h3>
+                        Signal Tracking Status
+                    </h3>
+
+
+                    <p class="tracking-description">
+                        Select a tracking parameter to view its
+                        current GNSS status.
+                    </p>
+
+
+
+                    <!-- RADIO OPTIONS -->
+
+                    <div class="tracking-options">
+
+
+                        <!-- CNR -->
+
+                        <div class="tracking-option">
+
+                            <input
+                                type="radio"
+                                name="trackingParameter"
+                                id="cnr"
+                                value="cnr"
+                                checked
+                                onchange="changeTrackingParameter('cnr')">
+
+
+                            <label for="cnr">
+
+                                <span class="radio-circle"></span>
+
+                                Carrier/Noise Ratio
+
+                            </label>
+
+                        </div>
+
+
+
+                        <!-- PSEUDO RANGE -->
+
+                        <div class="tracking-option">
+
+                            <input
+                                type="radio"
+                                name="trackingParameter"
+                                id="pseudo"
+                                value="pseudo"
+                                onchange="changeTrackingParameter('pseudo')">
+
+
+                            <label for="pseudo">
+
+                                <span class="radio-circle"></span>
+
+                                Pseudo Range
+
+                            </label>
+
+                        </div>
+
+
+
+                        <!-- CARRIER PHASE -->
+
+                        <div class="tracking-option">
+
+                            <input
+                                type="radio"
+                                name="trackingParameter"
+                                id="carrier"
+                                value="carrier"
+                                onchange="changeTrackingParameter('carrier')">
+
+
+                            <label for="carrier">
+
+                                <span class="radio-circle"></span>
+
+                                Carrier Phase
+
+                            </label>
+
+                        </div>
+
+
+
+                        <!-- DOPPLER -->
+
+                        <div class="tracking-option">
+
+                            <input
+                                type="radio"
+                                name="trackingParameter"
+                                id="doppler"
+                                value="doppler"
+                                onchange="changeTrackingParameter('doppler')">
+
+
+                            <label for="doppler">
+
+                                <span class="radio-circle"></span>
+
+                                Doppler
+
+                            </label>
+
+                        </div>
+
+
+
+                        <!-- LOCK TIME -->
+
+                        <div class="tracking-option">
+
+                            <input
+                                type="radio"
+                                name="trackingParameter"
+                                id="lock"
+                                value="lock"
+                                onchange="changeTrackingParameter('lock')">
+
+
+                            <label for="lock">
+
+                                <span class="radio-circle"></span>
+
+                                Lock Time
+
+                            </label>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- ACTIVE PARAMETER -->
+
+                    <div class="tracking-display">
+
+
+                        <div class="tracking-current">
+
+                            <span class="tracking-current-label">
+                                Selected Parameter
+                            </span>
+
+
+                            <span
+                                class="tracking-current-name"
+                                id="parameterName">
+
+                                Carrier/Noise Ratio
+
+                            </span>
+
+
+                            <span class="tracking-status">
+
+                                <span
+                                    class="tracking-status-dot">
+                                </span>
+
+                                Signal Tracking Active
+
+                            </span>
+
+                        </div>
+
+
+
+                        <div class="tracking-value">
+
+                            <strong id="parameterValue">
+                                42.6
+                            </strong>
+
+                            <small id="parameterUnit">
+                                dB-Hz
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     CONSTELLATION COVERAGE
+                     ================================================= -->
+
+                <div class="panel constellation-panel">
+
+                    <h3>
+                        Constellation Coverage
+                    </h3>
+
+
+                    <p>
+                        Currently monitored GNSS constellations.
+                    </p>
+
+
+                    <div class="chips">
+
+                        <span class="chip">
+                            GPS
+                        </span>
+
+                        <span class="chip">
+                            GLONASS
+                        </span>
+
+                        <span class="chip">
+                            BeiDou
+                        </span>
+
+                        <span class="chip">
+                            Galileo
+                        </span>
+
+                        <span class="chip">
+                            QZSS
+                        </span>
+
+                        <span class="chip">
+                            SBAS
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 NEW: SIGNAL GRAPH (changes with the radio button)
+                 ================================================= -->
+
+            <div class="sg-section">
+
+                <div class="sg-header">
+
+                    <h3 id="sgHeading">
+                        Carrier/Noise Ratio Graph
+                    </h3>
+
+                    <span class="sg-summary" id="sgSummary"></span>
+
+                </div>
+
+
+                <!-- CONSTELLATION TABS -->
+
+                <div class="sg-tabs" id="sgTabs" role="tablist"></div>
+
+
+                <!-- WHITE GRAPH BOX -->
+
+                <div class="sg-chart-box">
+
+                    <div class="sg-chart-title" id="sgChartTitle"></div>
+
+                    <div class="sg-svg-wrap" id="sgChart"></div>
+
+                    <div class="sg-legend" id="sgLegend"></div>
+
+                </div>
+
+            </div>
 
         </div>
 
 
-      </div>
 
-    </div>
+        <!-- =====================================================
+             BOTTOM HOME / BACK BUTTONS
+             ===================================================== -->
 
+         <div class="bottom-navigation">
 
-    <!-- FOOTER -->
+            <a
+              class="bottom-nav-btn"
+              href="../index.html">
 
-    <footer>
+              Home
 
-      <span>
-        Rx • Logging • Error
-      </span>
-
-      <span>
-        Copyright @SUP
-      </span>
-
-      <span>
-        GNSS Performance Monitoring Toolkit
-      </span>
-
-    </footer>
+            </a>
 
 
-  </main>
+            <button
+              class="bottom-nav-btn"
+              onclick="history.back()">
+
+              Back
+
+            </button>
+
+          </div>
+
+
+
+        <!-- =====================================================
+             FOOTER
+             ===================================================== -->
+
+        <footer class="main-footer">
+
+            <span>
+                Rx • Logging • Error
+            </span>
+
+            <span>
+                Copyright @SUP
+            </span>
+
+            <span>
+                GPMS Performance Monitoring System
+            </span>
+
+        </footer>
+
+
+    </main>
 
 </div>
 
 
+
+<!-- =========================================================
+     MAIN JAVASCRIPT
+     ========================================================= -->
+
 <script src="../js/app.js"></script>
+
 
 
 <!-- =========================================================
@@ -782,37 +720,38 @@ footer span:last-child {
 
 const trackingData = {
 
-  cnr: {
-    name: "Carrier/Noise Ratio",
-    value: "42.6",
-    unit: "dB-Hz"
-  },
+    cnr: {
+        name: "Carrier/Noise Ratio",
+        value: "42.6",
+        unit: "dB-Hz"
+    },
 
-  pseudo: {
-    name: "Pseudo Range",
-    value: "24,581.42",
-    unit: "m"
-  },
+    pseudo: {
+        name: "Pseudo Range",
+        value: "24,581.42",
+        unit: "m"
+    },
 
-  carrier: {
-    name: "Carrier Phase",
-    value: "128,542.73",
-    unit: "cycles"
-  },
+    carrier: {
+        name: "Carrier Phase",
+        value: "128,542.73",
+        unit: "cycles"
+    },
 
-  doppler: {
-    name: "Doppler",
-    value: "-1,245.37",
-    unit: "Hz"
-  },
+    doppler: {
+        name: "Doppler",
+        value: "-1,245.37",
+        unit: "Hz"
+    },
 
-  lock: {
-    name: "Lock Time",
-    value: "184.6",
-    unit: "s"
-  }
+    lock: {
+        name: "Lock Time",
+        value: "184.6",
+        unit: "s"
+    }
 
 };
+
 
 
 /* =========================================================
@@ -821,31 +760,413 @@ const trackingData = {
 
 function changeTrackingParameter(parameter) {
 
-  const data =
-    trackingData[parameter];
+    const data =
+        trackingData[parameter];
 
-  if (!data) {
-    return;
-  }
-
-
-  document.getElementById(
-    "parameterName"
-  ).textContent = data.name;
+    if (!data) {
+        return;
+    }
 
 
-  document.getElementById(
-    "parameterValue"
-  ).textContent = data.value;
+    document.getElementById(
+        "parameterName"
+    ).textContent = data.name;
 
 
-  document.getElementById(
-    "parameterUnit"
-  ).textContent = data.unit;
+    document.getElementById(
+        "parameterValue"
+    ).textContent = data.value;
+
+
+    document.getElementById(
+        "parameterUnit"
+    ).textContent = data.unit;
+
+
+    /* NEW: redraw the graph for the chosen parameter */
+    sgSetParameter(parameter);
 
 }
 
 </script>
 
+
+
+<!-- =========================================================
+     NEW: GRAPH RENDERING (plain SVG, no external libraries)
+     ========================================================= -->
+
+<script>
+
+/* ---------------------------------------------------------
+   PARAMETER SETTINGS (axis range, labels)
+   --------------------------------------------------------- */
+
+const SG_PARAMS = {
+
+    cnr: {
+        title: "Carrier/Noise Ratio",
+        yLabel: "Noise Ratio (dB-Hz)",
+        min: 0, max: 60, step: 10,
+        lo: 38, hi: 51
+    },
+
+    pseudo: {
+        title: "Pseudorange Graph",
+        yLabel: "Pseudorange (Million m)",
+        min: 0, max: 30, step: 5,
+        lo: 19, hi: 26
+    },
+
+    carrier: {
+        title: "Carrier Phase Graph",
+        yLabel: "Carrier Phase (Thousand cycles)",
+        min: 0, max: 150, step: 25,
+        lo: 100, hi: 135
+    },
+
+    doppler: {
+        title: "Doppler Graph",
+        yLabel: "Doppler (kHz)",
+        min: -4, max: 4, step: 1,
+        lo: -3.5, hi: 3.5
+    },
+
+    lock: {
+        title: "Lock Time Graph",
+        yLabel: "Lock Time (s)",
+        min: 0, max: 300, step: 50,
+        lo: 120, hi: 260
+    }
+
+};
+
+
+/* ---------------------------------------------------------
+   CONSTELLATIONS: PRNs and signal series.
+   A series with  empty: true  shows in the legend only
+   (no data tracked), exactly like the reference screens.
+   --------------------------------------------------------- */
+
+const SG_CONSTELLATIONS = {
+
+    "GPS": {
+        prns: [2, 5, 12, 13, 15, 18, 20, 21, 25, 26, 29],
+        series: [
+            { name: "L1 C/A",         color: "#f28c00" },
+            { name: "L2 P codeless",  color: "#0b6b1d" },
+            { name: "L5 Q",           color: "#7b1fa2", empty: true },
+            { name: "L2 P",           color: "#2ecc71", empty: true },
+            { name: "L2 C",           color: "#1d4ed8", empty: true }
+        ]
+    },
+
+    "GLONASS": {
+        prns: [2, 3, 4, 15, 16, 17, 18, 24],
+        series: [
+            { name: "L1 C/A", color: "#f28c00" },
+            { name: "L2 P",   color: "#0b6b1d" },
+            { name: "L2 C/A", color: "#7b1fa2", empty: true }
+        ]
+    },
+
+    "BeiDou": {
+        prns: [2, 3, 5, 6, 8, 13],
+        series: [
+            { name: "B1 with D1 data", color: "#f28c00" },
+            { name: "B2 with D1 data", color: "#0b6b1d" },
+            { name: "B1 with D2 data", color: "#7b1fa2" },
+            { name: "B2 with D2 data", color: "#2ecc71" }
+        ]
+    },
+
+    "SBAS": {
+        prns: [],
+        series: [
+            { name: "L1 C/A", color: "#f28c00", empty: true },
+            { name: "L5",     color: "#0b6b1d", empty: true }
+        ]
+    },
+
+    "Galileo": {
+        prns: [],
+        series: [
+            { name: "E1",   color: "#f28c00", empty: true },
+            { name: "E5a",  color: "#0b6b1d", empty: true },
+            { name: "E5b",  color: "#7b1fa2", empty: true },
+            { name: "E6",   color: "#2ecc71", empty: true }
+        ]
+    },
+
+    "QZSS": {
+        prns: [],
+        series: [
+            { name: "L1 C/A", color: "#f28c00", empty: true },
+            { name: "L2C",    color: "#0b6b1d", empty: true },
+            { name: "L5",     color: "#7b1fa2", empty: true }
+        ]
+    }
+
+};
+
+
+/* ---------------------------------------------------------
+   SAMPLE DATA
+   Replace this function with your live receiver data.
+   It must return a number for the given parameter,
+   constellation, PRN index and series index.
+   --------------------------------------------------------- */
+
+function sgSeeded(n) {
+    const x = Math.sin(n * 127.1) * 43758.5453;
+    return x - Math.floor(x);
+}
+
+function sgHash(text) {
+    let h = 0;
+    for (let i = 0; i < text.length; i++) {
+        h += text.charCodeAt(i) * (i + 1);
+    }
+    return h;
+}
+
+function sgGetValue(param, constName, prnIndex, seriesIndex) {
+
+    const p = SG_PARAMS[param];
+
+    const seed =
+        sgHash(constName) * 31 +
+        sgHash(param) * 17 +
+        prnIndex * 7 + 1;
+
+    let v = p.lo + (p.hi - p.lo) * sgSeeded(seed);
+
+    /* second, third... signals sit a little lower / smaller */
+    if (seriesIndex > 0) {
+        v = v * (0.8 + 0.12 * sgSeeded(seed + seriesIndex * 13));
+    }
+
+    return Math.round(v * 100) / 100;
+}
+
+
+/* ---------------------------------------------------------
+   STATE
+   --------------------------------------------------------- */
+
+let sgParam = "cnr";
+let sgConst = "GPS";
+
+const SG_LOW_CNR = 36; /* bars below this are drawn red */
+
+
+/* ---------------------------------------------------------
+   TABS
+   --------------------------------------------------------- */
+
+function sgBuildTabs() {
+
+    const box = document.getElementById("sgTabs");
+    box.innerHTML = "";
+
+    Object.keys(SG_CONSTELLATIONS).forEach(function (name) {
+
+        const btn = document.createElement("button");
+
+        btn.type = "button";
+        btn.className = "sg-tab" + (name === sgConst ? " active" : "");
+        btn.textContent = name;
+        btn.setAttribute("role", "tab");
+        btn.setAttribute("aria-selected", name === sgConst);
+
+        btn.addEventListener("click", function () {
+            sgConst = name;
+            sgBuildTabs();
+            sgRender();
+        });
+
+        box.appendChild(btn);
+
+    });
+
+}
+
+
+/* ---------------------------------------------------------
+   DRAW CHART
+   --------------------------------------------------------- */
+
+function sgRender() {
+
+    const p = SG_PARAMS[sgParam];
+    const c = SG_CONSTELLATIONS[sgConst];
+
+    const W = 900, H = 380;
+    const ml = 66, mr = 20, mt = 16, mb = 44;
+    const pw = W - ml - mr;
+    const ph = H - mt - mb;
+
+    const yPos = function (v) {
+        return mt + (p.max - v) / (p.max - p.min) * ph;
+    };
+
+    const baseY = yPos(Math.max(p.min, 0));
+
+    let svg =
+        '<svg viewBox="0 0 ' + W + ' ' + H + '" ' +
+        'xmlns="http://www.w3.org/2000/svg" role="img" ' +
+        'aria-label="' + sgConst + ' ' + p.title + '">';
+
+    svg += '<rect width="' + W + '" height="' + H + '" fill="#ffffff"/>';
+
+    /* horizontal grid + y labels */
+    for (let v = p.min; v <= p.max + 0.0001; v += p.step) {
+
+        const y = yPos(v);
+
+        svg += '<line x1="' + ml + '" x2="' + (W - mr) + '" y1="' + y +
+               '" y2="' + y + '" stroke="' + (v === 0 ? '#6b7280' : '#e5e7eb') +
+               '" stroke-width="' + (v === 0 ? 1.4 : 1) + '"/>';
+
+        svg += '<text x="' + (ml - 8) + '" y="' + (y + 4) +
+               '" text-anchor="end" font-size="12" fill="#374151">' + v + '</text>';
+    }
+
+    /* axes */
+    svg += '<line x1="' + ml + '" x2="' + ml + '" y1="' + mt +
+           '" y2="' + (mt + ph) + '" stroke="#9ca3af"/>';
+
+    /* y axis title */
+    svg += '<text transform="translate(16,' + (mt + ph / 2) +
+           ') rotate(-90)" text-anchor="middle" font-size="13" ' +
+           'font-weight="600" fill="#111827">' + p.yLabel + '</text>';
+
+    /* x axis title */
+    svg += '<text x="' + (ml + pw / 2) + '" y="' + (H - 6) +
+           '" text-anchor="middle" font-size="13" font-weight="600" ' +
+           'fill="#111827">PRN</text>';
+
+
+    const n = c.prns.length;
+    let trackedCount = 0;
+
+    if (n === 0) {
+
+        svg += '<text x="' + (ml + pw / 2) + '" y="' + (mt + ph / 2) +
+               '" text-anchor="middle" font-size="15" fill="#6b7280">' +
+               'No ' + sgConst + ' satellites tracked</text>';
+
+    } else {
+
+        const active = [];
+
+        c.series.forEach(function (s, i) {
+            if (!s.empty) { active.push(i); }
+        });
+
+        const groupW = pw / n;
+        const barW = Math.min(16, groupW * 0.75 / active.length);
+        const groupBars = barW * active.length;
+
+        c.prns.forEach(function (prn, pi) {
+
+            const gx = ml + groupW * pi + (groupW - groupBars) / 2;
+
+            active.forEach(function (si, k) {
+
+                const v = sgGetValue(sgParam, sgConst, pi, si);
+                const s = c.series[si];
+
+                let color = s.color;
+
+                if (sgParam === "cnr" && v < SG_LOW_CNR) {
+                    color = "#e11d1d";
+                }
+
+                const y = yPos(v);
+                const top = Math.min(y, baseY);
+                const h = Math.max(Math.abs(baseY - y), 1);
+
+                svg += '<rect x="' + (gx + k * barW) + '" y="' + top +
+                       '" width="' + (barW - 1) + '" height="' + h +
+                       '" fill="' + color + '">' +
+                       '<title>PRN ' + prn + ' · ' + s.name + ': ' + v +
+                       '</title></rect>';
+
+            });
+
+            svg += '<text x="' + (ml + groupW * pi + groupW / 2) +
+                   '" y="' + (mt + ph + 18) +
+                   '" text-anchor="middle" font-size="12" fill="#374151">' +
+                   prn + '</text>';
+
+        });
+
+        trackedCount = n;
+    }
+
+    svg += '</svg>';
+
+    document.getElementById("sgChart").innerHTML = svg;
+
+
+    /* legend */
+    const legend = document.getElementById("sgLegend");
+    legend.innerHTML = "";
+
+    c.series.forEach(function (s) {
+
+        const item = document.createElement("span");
+        item.className = "sg-legend-item";
+
+        item.innerHTML =
+            '<span class="sg-legend-swatch" style="background:' +
+            s.color + '"></span>' + s.name;
+
+        legend.appendChild(item);
+
+    });
+
+
+    /* titles */
+    document.getElementById("sgChartTitle").textContent =
+        sgConst + " – " + p.title;
+
+    document.getElementById("sgSummary").textContent =
+        trackedCount + " satellite" + (trackedCount === 1 ? "" : "s") +
+        " tracked";
+}
+
+
+/* ---------------------------------------------------------
+   CALLED WHEN A RADIO BUTTON IS CLICKED
+   --------------------------------------------------------- */
+
+function sgSetParameter(parameter) {
+
+    if (!SG_PARAMS[parameter]) {
+        return;
+    }
+
+    sgParam = parameter;
+
+    document.getElementById("sgHeading").textContent =
+        trackingData[parameter].name + " Graph";
+
+    sgRender();
+}
+
+
+/* ---------------------------------------------------------
+   INITIAL DRAW
+   --------------------------------------------------------- */
+
+sgBuildTabs();
+sgRender();
+
+</script>
+
+
 </body>
+
 </html>

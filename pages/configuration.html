@@ -1,681 +1,2420 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Configuration Setting | GNSS Toolkit</title>
+    <title>Configuration Setting </title>
 
-  <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
 
-  <style>
-    /* =========================================================
-       FULL PAGE LAYOUT
-    ========================================================= */
-
-    html,
-    body {
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      background: #f5f8fa;
-      overflow: hidden;
-    }
-
-    .app-shell {
-      display: flex;
-      width: 100%;
-      height: 100vh;
-      min-height: 100vh;
-      overflow: hidden;
-    }
-
-    /* =========================================================
-       SIDEBAR
-    ========================================================= */
-
-    .sidebar {
-      height: 100vh;
-      min-height: 100vh;
-      flex-shrink: 0;
-      box-sizing: border-box;
-    }
-
-    .sidebar-container {
-      height: 100%;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      box-sizing: border-box;
-    }
-
-    .sidebar-nav {
-      flex: 1;
-      overflow-y: auto;
-    }
-
-    .sidebar-footer {
-      flex-shrink: 0;
-    }
-
-    /* =========================================================
-       MAIN CONTENT
-    ========================================================= */
-
-    .main-content {
-      flex: 1;
-      min-width: 0;
-      height: 100vh;
-      min-height: 100vh;
-
-      display: flex;
-      flex-direction: column;
-
-      background: #ffffff;
-
-      overflow: hidden;
-    }
-
-
-    /* =========================================================
-       PAGE CONTENT
-    ========================================================= */
-
-    .page-content {
-      flex: 1;
-      min-height: 0;
-
-      overflow-y: auto;
-      overflow-x: hidden;
-
-      background: #f5f8fa;
-    }
-
-    .content-container {
-      min-height: 100%;
-      box-sizing: border-box;
-    }
-
-    /* =========================================================
-       PROFESSIONAL FOOTER
-    ========================================================= */
-
-    .footer-bar {
-      width: 100%;
-      height: 48px;
-      min-height: 48px;
-
-      flex-shrink: 0;
-
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-
-      align-items: center;
-
-      padding: 0 24px;
-
-      box-sizing: border-box;
-
-      background: #10243e;
-
-      color: #ffffff;
-
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-
-      font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
-      font-size: 12px;
-
-      position: relative;
-      z-index: 20;
-    }
-
-    /* Footer sections */
-
-    .footer-item {
-      display: flex;
-      align-items: center;
-
-      min-width: 0;
-
-      white-space: nowrap;
-    }
-
-    /* Left */
-
-    .status-flags {
-      justify-content: flex-start;
-
-      color: #d8e2eb;
-
-      font-size: 12px;
-
-      letter-spacing: 0.2px;
-    }
-
-    .status-flags::before {
-      content: "";
-      width: 7px;
-      height: 7px;
-
-      margin-right: 9px;
-
-      border-radius: 50%;
-
-      background: #0d9f7a;
-
-      box-shadow:
-        0 0 0 3px rgba(13, 159, 122, 0.12);
-    }
-
-    /* Center */
-
-    .copyright {
-      justify-content: center;
-
-      color: #aebdca;
-
-      padding: 0 20px;
-    }
-
-    /* Right */
-
-    .app-title {
-      justify-content: flex-end;
-
-      color: #d8e2eb;
-
-      font-weight: 500;
-
-      letter-spacing: 0.2px;
-    }
-
-    /* =========================================================
-       FOOTER HOVER / POLISH
-    ========================================================= */
-
-    .footer-bar::before {
-      content: "";
-
-      position: absolute;
-
-      top: 0;
-      left: 0;
-
-      width: 100%;
-      height: 1px;
-
-      background: rgba(13, 159, 122, 0.35);
-    }
-
-    /* =========================================================
-       TABLET
-    ========================================================= */
-
-    @media (max-width: 900px) {
-
-      .footer-bar {
-        grid-template-columns: 1fr 1fr;
-
-        height: auto;
-        min-height: 48px;
-
-        padding: 9px 18px;
-
-        row-gap: 5px;
-      }
-
-      .copyright {
-        justify-content: flex-end;
-        padding: 0;
-      }
-
-      .app-title {
-        grid-column: 1 / -1;
-
-        justify-content: center;
-
-        font-size: 11px;
-        color: #aebdca;
-      }
-    }
-
-    /* =========================================================
-       MOBILE
-    ========================================================= */
-
-    @media (max-width: 600px) {
-
-      body {
-        overflow: auto;
-      }
-
-      .app-shell {
-        height: auto;
-        min-height: 100vh;
-        overflow: visible;
-      }
-
-      .main-content {
-        height: auto;
-        min-height: 100vh;
-        overflow: visible;
-      }
-
-      .page-content {
-        overflow: visible;
-      }
-
-      .footer-bar {
-        display: flex;
-
-        flex-wrap: wrap;
-
-        justify-content: center;
-
-        gap: 7px 18px;
-
-        height: auto;
-        min-height: 52px;
-
-        padding: 10px 14px;
-
-        text-align: center;
-      }
-
-      .footer-item {
-        justify-content: center;
-      }
-
-      .status-flags {
-        font-size: 11px;
-      }
-
-      .copyright {
-        font-size: 11px;
-      }
-
-      .app-title {
-        width: 100%;
-
-        font-size: 10px;
-      }
-    }
-
-    /* =========================================================
-       SMALL MOBILE
-    ========================================================= */
-
-    @media (max-width: 400px) {
-
-      .footer-bar {
-        gap: 5px 12px;
-        padding: 9px 10px;
-      }
-
-      .status-flags,
-      .copyright {
-        font-size: 10px;
-      }
-
-      .app-title {
-        font-size: 9px;
-      }
-    }
-  </style>
-
+    
 </head>
+
 
 <body>
 
-  <!-- Root App Container -->
-
-  <div class="app-shell">
+<div class="app-shell">
 
 
     <!-- =====================================================
-         SIDEBAR NAVIGATION
+         SIDEBAR
     ====================================================== -->
 
     <aside class="sidebar" id="sidebar">
 
-      <div class="sidebar-container">
-
-
-        <!-- Brand Header -->
-
         <div class="sidebar-brand">
 
-          <div class="brand-mark">
-            GNSS
-          </div>
+            <div class="brand-mark">
+                GPMS
+            </div>
 
-          <div class="brand-text">
-
-            <strong>
-              GNSS Toolkit
-            </strong>
-
-            <small>
-              Performance Monitor
-            </small>
-
-          </div>
+            <div>
+                <strong>GPMS </strong>
+                <small>Performance Monitor</small>
+            </div>
 
         </div>
 
 
-        <!-- Navigation Menu -->
-
         <nav class="sidebar-nav">
 
-          <a class="nav-item" href="../index.html">
-            <span>⌂</span>
-            Home
-          </a>
+            <a class="nav-item" href="../index.html">
+                <span>⌂</span>
+                Home
+            </a>
 
-          <a class="nav-item active" href="configuration.html">
-            <span>⚙</span>
-            Configuration Setting
-          </a>
+            <a class="nav-item active" href="configuration.html">
+                <span>⚙</span>
+                Configuration Setting
+            </a>
 
-          <a class="nav-item" href="position.html">
-            <span>◎</span>
-            Position Window
-          </a>
+            <a class="nav-item" href="position.html">
+                <span>◎</span>
+                Position Window
+            </a>
 
-          <a class="nav-item" href="sky-view.html">
-            <span>◉</span>
-            Sky View
-          </a>
+            <a class="nav-item" href="sky-view.html">
+                <span>◉</span>
+                Sky View
+            </a>
 
-          <a class="nav-item" href="dop.html">
-            <span>▥</span>
-            Dilution of Precision
-          </a>
+            <a class="nav-item" href="dop.html">
+                <span>▥</span>
+                Dilution of Precision
+            </a>
 
-          <a class="nav-item" href="plan-view.html">
-            <span>⌖</span>
-            Plan View
-          </a>
+            <a class="nav-item" href="plan-view.html">
+                <span>⌖</span>
+                Plan View
+            </a>
 
-          <a class="nav-item" href="signal-tracking.html">
-            <span>⌁</span>
-            Signal Tracking
-          </a>
+            <a class="nav-item" href="signal-tracking.html">
+                <span>⌁</span>
+                Signal Tracking
+            </a>
 
-          <a class="nav-item" href="integrity.html">
-            <span>◫</span>
-            Integrity Graphs
-          </a>
+            <a class="nav-item" href="integrity.html">
+                <span>◫</span>
+                Integrity Graphs
+            </a>
 
-          <a class="nav-item" href="aviation.html">
-            <span>✈</span>
-            Aviation Graphs
-          </a>
+            <a class="nav-item" href="aviation.html">
+                <span>✈</span>
+                Aviation Graphs
+            </a>
 
         </nav>
-
-
-        <!-- Sidebar Footer Status -->
-
-  
-      </div>
 
     </aside>
 
 
     <!-- =====================================================
-         MAIN CONTENT
+         MAIN
     ====================================================== -->
 
     <main class="main-content">
 
 
-      <!-- ===================================================
-           TOPBAR HEADER
-      ==================================================== -->
+        <!-- TOPBAR -->
 
-      <header class="topbar">
-
-        <div class="topbar-left">
-
-          <button
-            class="menu-btn"
-            onclick="toggleSidebar()">
-            ☰
-          </button>
-
-          <div class="header-titles">
-
-            <div class="breadcrumb">
-              GNSS / Configuration Setting
-            </div>
-
-            <h1>
-              Configuration Setting
-            </h1>
-
-          </div>
-
-        </div>
-
-
-        <div class="topbar-right">
-
-          <button
-            class="exit-btn"
-            onclick="handleExit()">
-            Exit
-          </button>
-
-        </div>
-
-      </header>
-
-
-      <!-- ===================================================
-           PAGE BODY
-      ==================================================== -->
-
-      <div class="page-content">
-
-        <div class="content-container">
-
-
-          <!-- Navigation Action Row -->
-
-          <div class="back-row">
-
-            <a
-              class="back-btn"
-              href="../index.html">
-              ← Home
-            </a>
+        <header class="topbar">
 
             <button
-              class="back-btn"
-              onclick="history.back()">
-              ← Back
+                class="menu-btn"
+                onclick="toggleSidebar()">
+                ☰
             </button>
 
-          </div>
+            <div>
 
+             
+                <div class="breadcrumb" style="color: #1976d2;">
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                 
+                    GNSS / Configuration Setting
+                </div>
 
-          <!-- Title Banner Section -->
-
-          <div class="page-title">
-
-            <h2>
-              01. Configuration Setting
-            </h2>
-
-            <p>
-              Select the source for the GNSS monitoring session.
-            </p>
-
-          </div>
-
-
-          <!-- Configuration Panel / Card -->
-
-          <div class="panel">
-
-            <div class="panel-header">
-
-              <h3>
-                Select Data Source
-              </h3>
-
-              <p>
-                Choose how GNSS monitoring data will enter the system.
-              </p>
+                <h1>
+                    Configuration Setting
+                </h1>
 
             </div>
 
+            <!-- <button
+                class="exit-btn"
+                onclick="handleExit()">
+                Exit
+            </button> -->
 
-            <!-- Source Option List -->
-
-            <div class="source-options">
-
-
-              <!-- SERIAL -->
-
-              <a
-                class="source-option"
-                href="serial.html">
-
-                <span class="radio"></span>
-
-                <span class="option-details">
-
-                  <b>
-                    Serial
-                  </b>
-
-                  <small>
-                    Live serial source
-                  </small>
-
-                </span>
-
-                <span class="open-arrow">
-                  →
-                </span>
-
-              </a>
+        </header>
 
 
-              <!-- PLAYBACK -->
+        <!-- =================================================
+             PAGE CONTENT
+        ================================================== -->
 
-              <a
-                class="source-option"
-                href="playback.html">
+        <div class="page-content">
 
-                <span class="radio"></span>
-
-                <span class="option-details">
-
-                  <b>
-                    Playback
-                  </b>
-
-                  <small>
-                    Replay recorded data
-                  </small>
-
-                </span>
-
-                <span class="open-arrow">
-                  →
-                </span>
-
-              </a>
+            <div class="content-container">
 
 
-              <!-- NETWORK -->
+                <!-- PAGE TITLE -->
 
-              <a
-                class="source-option"
-                href="network.html">
+                <!-- <div class="page-title">
 
-                <span class="radio"></span>
+                    <h2>
+                        01. Configuration Setting
+                    </h2>
 
-                <span class="option-details">
+                    <p>
+                        Select the source for the GNSS monitoring session.
+                    </p>
 
-                  <b>
-                    Network
-                  </b>
+                </div> -->
 
-                  <small>
-                    Network data source
-                  </small>
 
-                </span>
+                <!-- =================================================
+                     SOURCE SELECTION
+                ================================================== -->
 
-                <span class="open-arrow">
-                  →
-                </span>
+                <div class="panel">
 
-              </a>
+                    <div class="panel-header">
 
+                        <h3>
+                            Select Data Source
+                        </h3>
+
+                        <p>
+                            Choose how GNSS monitoring data will enter the system.
+                        </p>
+
+                    </div>
+
+
+                    <div class="source-options">
+
+
+                        <!-- SERIAL -->
+
+                        <button
+                            type="button"
+                            class="source-option"
+                            id="serialOption"
+                            onclick="showSettings('serial')">
+
+                            <span class="radio"></span>
+
+                            <span class="option-details">
+
+                                <b>
+                                    Serial
+                                </b>
+
+                                <small>
+                                    Live serial source
+                                </small>
+
+                            </span>
+
+                          
+
+                        </button>
+
+
+                        <!-- PLAYBACK -->
+
+                        <button
+                            type="button"
+                            class="source-option"
+                            id="playbackOption"
+                            onclick="showSettings('playback')">
+
+                            <span class="radio"></span>
+
+                            <span class="option-details">
+
+                                <b>
+                                    Playback
+                                </b>
+
+                                <small>
+                                    Replay recorded GNSS monitoring data
+                                </small>
+
+                            </span>
+
+                          
+
+                        </button>
+
+
+                        <!-- NETWORK -->
+
+                        <button
+                            type="button"
+                            class="source-option"
+                            id="networkOption"
+                            onclick="showSettings('network')">
+
+                            <span class="radio"></span>
+
+                            <span class="option-details">
+
+                                <b>
+                                    Network
+                                </b>
+
+                                <small>
+                                    Network GNSS data source
+                                </small>
+
+                            </span>
+<!-- 
+                            <span class="open-arrow">
+                                →
+                            </span> -->
+
+                        </button>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         SERIAL SETTINGS
+                    ================================================== -->
+
+                    <div
+                        class="settings-panel"
+                        id="serialSettings">
+
+                        <div class="settings-header">
+
+                            <div class="settings-heading">
+
+                                <h3>
+                                    Serial Configuration
+                                </h3>
+
+                                <p>
+                                    Configure the live GNSS serial communication parameters.
+                                </p>
+
+                            </div>
+
+                            <button
+                                type="button"
+                                class="close-settings"
+                                onclick="closeSettings()">
+                                ×
+                            </button>
+
+                        </div>
+
+
+                        <div class="settings-body">
+
+                            <div class="section-divider"></div>
+
+
+                            <!-- ALL SERIAL FIELDS IN ONE ROW -->
+
+                            <div class="dialog-grid">
+
+
+                                <div class="field-row">
+
+                                    <label>
+                                        Port Name
+                                    </label>
+
+                                    <select>
+
+                                        <option selected>
+                                            COM1
+                                        </option>
+
+                                        <option>
+                                            COM2
+                                        </option>
+
+                                        <option>
+                                            COM3
+                                        </option>
+
+                                        <option>
+                                            COM4
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+
+                                <div class="field-row">
+
+                                    <label>
+                                        Data Bits
+                                    </label>
+
+                                    <select>
+
+                                        <option selected>
+                                            8
+                                        </option>
+
+                                        <option>
+                                            7
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+
+                                <div class="field-row">
+
+                                    <label>
+                                        Baud Rate
+                                    </label>
+
+                                    <select>
+
+                                        <option>
+                                            4800
+                                        </option>
+
+                                        <option>
+                                            9600
+                                        </option>
+
+                                        <option>
+                                            19200
+                                        </option>
+
+                                        <option>
+                                            38400
+                                        </option>
+
+                                        <option selected>
+                                            115200
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+
+                                <div class="field-row">
+
+                                    <label>
+                                        Parity
+                                    </label>
+
+                                    <select>
+
+                                        <option selected>
+                                            None
+                                        </option>
+
+                                        <option>
+                                            Even
+                                        </option>
+
+                                        <option>
+                                            Odd
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+
+                                <div class="field-row">
+
+                                    <label>
+                                        Stop Bits
+                                    </label>
+
+                                    <select>
+
+                                        <option selected>
+                                            One
+                                        </option>
+
+                                        <option>
+                                            Two
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="button-row">
+
+                                <button
+                                    class="dialog-btn start-btn"
+                                    onclick="startConfiguration('Serial')">
+                                    Start
+                                </button>
+
+                                <button
+                                    class="dialog-btn cancel-btn"
+                                    onclick="closeSettings()">
+                                    Cancel
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         PLAYBACK SETTINGS
+                    ================================================== -->
+
+                    <div 
+    class="settings-panel" 
+    id="playbackSettings"> 
+
+    <div class="settings-header"> 
+
+        <div class="settings-heading"> 
+
+            <h3> 
+                Playback Configuration 
+            </h3> 
+
+            <p> 
+                Replay recorded GNSS monitoring data. 
+            </p> 
+
+        </div> 
+
+        <button 
+            type="button" 
+            class="close-settings" 
+            onclick="closeSettings()"> 
+            × 
+        </button> 
+
+    </div> 
+
+
+    <div class="settings-body"> 
+
+
+        <!-- MODE --> 
+
+        <div class="source-toggle"> 
+
+            <label> 
+
+                <input 
+                    type="radio" 
+                    name="playbackMode" 
+                    value="single" 
+                    checked 
+                    onclick="handleModeSwitch('single')"> 
+
+                Open File 
+
+            </label> 
+
+
+            <label> 
+
+                <input 
+                    type="radio" 
+                    name="playbackMode" 
+                    value="multiple" 
+                    onclick="handleModeSwitch('multiple')"> 
+
+                Select Multiples Files 
+
+            </label> 
+
+        </div> 
+
+
+        <!-- SINGLE FILE INPUT -->
+
+        <input 
+            type="file" 
+            id="single-file-picker" 
+            style="display:none" 
+            onchange="handleSingleFilePick(this)"> 
+
+
+        <!-- MULTIPLE FILE / FOLDER INPUT -->
+
+        <input 
+            type="file" 
+            id="multiple-file-picker" 
+            style="display:none" 
+            webkitdirectory 
+            directory 
+            multiple
+            onchange="handleMultipleFilePick(this)"> 
+
+
+        <!-- FILE PATH --> 
+
+        <div class="file-input-bar"> 
+
+            <label> 
+                File Path 
+            </label> 
+
+            <input 
+                type="text" 
+                id="file-path-input" 
+                placeholder="Select file..." 
+                readonly> 
+
+            <button 
+                type="button" 
+                class="browse-btn" 
+                onclick="triggerBrowse()"> 
+
+                Browse 
+
+            </button> 
+
+        </div> 
+
+
+        <!-- PLAYER --> 
+
+
+        <!-- ACTION BUTTONS --> 
+
+
+      
+
+
+    </div> 
+
+</div>
+
+
+                    <!-- =================================================
+                         NETWORK SETTINGS
+                    ================================================== -->
+
+                    <div
+                        class="settings-panel"
+                        id="networkSettings">
+
+                        <div class="settings-header">
+
+                            <div class="settings-heading">
+
+                                <h3>
+                                    Network Configuration
+                                </h3>
+
+                                <p>
+                                    Configure the network GNSS data source.
+                                </p>
+
+                            </div>
+
+                            <button
+                                type="button"
+                                class="close-settings"
+                                onclick="closeSettings()">
+                                ×
+                            </button>
+
+                        </div>
+
+
+                        <div class="settings-body">
+
+                            <div class="section-divider"></div>
+
+
+                            <!-- ALL NETWORK FIELDS IN ONE ROW -->
+
+                            <div class="network-grid">
+
+
+                                <div class="field-row">
+
+                                    <label>
+                                        Host / IP Address
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="networkHost"
+                                        placeholder="127.0.0.1">
+
+                                </div>
+
+
+                                <div class="field-row">
+
+                                    <label>
+                                        Port
+                                    </label>
+
+                                    <input
+                                        type="number"
+                                        id="networkPort"
+                                        placeholder="5000">
+
+                                </div>
+
+
+                                <div class="field-row">
+
+                                    <label>
+                                        Protocol
+                                    </label>
+
+                                    <select>
+
+                                        <option>
+                                            TCP
+                                        </option>
+
+                                        <option>
+                                            UDP
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+
+                                <div class="field-row">
+
+                                    <label>
+                                        Connection Mode
+                                    </label>
+
+                                    <select>
+
+                                        <option>
+                                            Client
+                                        </option>
+
+                                        <option>
+                                            Server
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="button-row">
+
+                                <button
+                                    class="dialog-btn start-btn"
+                                    onclick="startConfiguration('Network')">
+
+                                    Connect
+
+                                </button>
+
+
+                                <button
+                                    class="dialog-btn cancel-btn"
+                                    onclick="closeSettings()">
+
+                                    Cancel
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     HOME / BACK AT END OF PAGE
+                ================================================== -->
+
+                <div class="bottom-navigation">
+
+                    <a
+                        class="bottom-nav-btn"
+                        href="../index.html">
+
+                         Home
+
+                    </a>
+
+
+                    <button
+                        class="bottom-nav-btn"
+                        onclick="history.back()">
+
+                         Back
+
+                    </button>
+
+                </div>
 
             </div>
 
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <!-- ===================================================
-           PROFESSIONAL FOOTER
-      ==================================================== -->
-
-      <footer class="footer-bar">
-
-
-        <!-- LEFT -->
-
-        <div class="footer-item status-flags">
-          Rx • Logging • Error
         </div>
 
 
-        <!-- CENTER -->
+        <!-- =================================================
+             FOOTER
+        ================================================== -->
 
-        <div class="footer-item copyright">
-          Copyright @SUP
-        </div>
+        <footer>
 
+            <span>
+                Rx • Logging • Error
+            </span>
 
-        <!-- RIGHT -->
+            <span>
+                Copyright @SUP
+            </span>
 
-        <div class="footer-item app-title">
-          GNSS Performance Monitoring Toolkit
-        </div>
+            <span>
+                GNSS Performance Monitoring Toolkit
+            </span>
 
-
-      </footer>
+        </footer>
 
     </main>
 
-  </div>
+</div>
 
 
-  <!-- JAVASCRIPT -->
+<!-- =========================================================
+     FOLDER BROWSER MODAL
+========================================================= -->
 
-  <script src="../js/app.js"></script>
+<div
+    class="folder-dialog-overlay"
+    id="folder-dialog-modal">
+
+    <div class="folder-dialog">
+
+
+        <div class="dialog-header">
+
+            <span>
+                Browse For Folder
+            </span>
+
+            <span
+                class="close-btn"
+                onclick="closeFolderDialog()">
+
+                ✕
+
+            </span>
+
+        </div>
+
+
+        <div class="dialog-body">
+
+            <p>
+                Open a folder which contains the gps output
+            </p>
+
+
+            <div class="tree-view-window">
+
+
+                <!-- THIS PC -->
+
+                <div class="tree-node">
+
+                    <div
+                        class="tree-row"
+                        onclick="selectFolder(this, 'This PC')">
+
+                        <span
+                            class="tree-expander"
+                            onclick="toggleTreeNode(event, 'c-pc')">
+
+                            ▼
+
+                        </span>
+
+                        <span class="tree-icon">
+                            💻
+                        </span>
+
+                        <span>
+                            This PC
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="tree-children expanded"
+                        id="c-pc">
+
+
+                        <div
+                            class="tree-row"
+                            onclick="selectFolder(this, '3D Objects')">
+
+                            <span
+                                class="tree-expander"
+                                onclick="toggleTreeNode(event, 'c-3d')">
+
+                                ▶
+
+                            </span>
+
+                            <span class="tree-icon">
+                                🧊
+                            </span>
+
+                            <span>
+                                3D Objects
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            class="tree-children"
+                            id="c-3d">
+
+                            <div
+                                class="tree-row"
+                                onclick="selectFolder(this, '3D Objects\\Models')">
+
+                                <span class="tree-expander"></span>
+
+                                <span class="tree-icon">
+                                    📁
+                                </span>
+
+                                <span>
+                                    Models
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- DESKTOP -->
+
+                        <div
+                            class="tree-row"
+                            onclick="selectFolder(this, 'Desktop')">
+
+                            <span
+                                class="tree-expander"
+                                onclick="toggleTreeNode(event, 'c-desk')">
+
+                                ▶
+
+                            </span>
+
+                            <span class="tree-icon">
+                                🖥
+                            </span>
+
+                            <span>
+                                Desktop
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            class="tree-children"
+                            id="c-desk">
+
+                            <div
+                                class="tree-row"
+                                onclick="selectFolder(this, 'Desktop\\GNSS_Project')">
+
+                                <span class="tree-expander"></span>
+
+                                <span class="tree-icon">
+                                    📁
+                                </span>
+
+                                <span>
+                                    GNSS_Project
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- DOCUMENTS -->
+
+                        <div
+                            class="tree-row selected"
+                            onclick="selectFolder(this, 'Documents')">
+
+                            <span
+                                class="tree-expander"
+                                onclick="toggleTreeNode(event, 'c-docs')">
+
+                                ▼
+
+                            </span>
+
+                            <span class="tree-icon">
+                                📄
+                            </span>
+
+                            <span>
+                                Documents
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            class="tree-children expanded"
+                            id="c-docs">
+
+                            <div
+                                class="tree-row"
+                                onclick="selectFolder(this, 'Documents\\GNSS_Logs')">
+
+                                <span class="tree-expander"></span>
+
+                                <span class="tree-icon">
+                                    📁
+                                </span>
+
+                                <span>
+                                    GNSS_Logs
+                                </span>
+
+                            </div>
+
+
+                            <div
+                                class="tree-row"
+                                onclick="selectFolder(this, 'Documents\\RTK_Output')">
+
+                                <span class="tree-expander"></span>
+
+                                <span class="tree-icon">
+                                    📁
+                                </span>
+
+                                <span>
+                                    RTK_Output
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- DOWNLOADS -->
+
+                        <div
+                            class="tree-row"
+                            onclick="selectFolder(this, 'Downloads')">
+
+                            <span
+                                class="tree-expander"
+                                onclick="toggleTreeNode(event, 'c-down')">
+
+                                ▶
+
+                            </span>
+
+                            <span class="tree-icon">
+                                ⬇
+                            </span>
+
+                            <span>
+                                Downloads
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            class="tree-children"
+                            id="c-down">
+
+                            <div
+                                class="tree-row"
+                                onclick="selectFolder(this, 'Downloads\\Dataset_2026')">
+
+                                <span class="tree-expander"></span>
+
+                                <span class="tree-icon">
+                                    📁
+                                </span>
+
+                                <span>
+                                    Dataset_2026
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- MUSIC -->
+
+                        <div
+                            class="tree-row"
+                            onclick="selectFolder(this, 'Music')">
+
+                            <span class="tree-expander">
+                                ▶
+                            </span>
+
+                            <span class="tree-icon">
+                                🎵
+                            </span>
+
+                            <span>
+                                Music
+                            </span>
+
+                        </div>
+
+
+                        <!-- PICTURES -->
+
+                        <div
+                            class="tree-row"
+                            onclick="selectFolder(this, 'Pictures')">
+
+                            <span class="tree-expander">
+                                ▶
+                            </span>
+
+                            <span class="tree-icon">
+                                🖼
+                            </span>
+
+                            <span>
+                                Pictures
+                            </span>
+
+                        </div>
+
+
+                        <!-- VIDEOS -->
+
+                        <div
+                            class="tree-row"
+                            onclick="selectFolder(this, 'Videos')">
+
+                            <span class="tree-expander">
+                                ▶
+                            </span>
+
+                            <span class="tree-icon">
+                                🎬
+                            </span>
+
+                            <span>
+                                Videos
+                            </span>
+
+                        </div>
+
+
+                        <!-- C DRIVE -->
+
+                        <div
+                            class="tree-row"
+                            onclick="selectFolder(this, 'Windows 10 x64 Legacy (C:)')">
+
+                            <span
+                                class="tree-expander"
+                                onclick="toggleTreeNode(event, 'c-c')">
+
+                                ▶
+
+                            </span>
+
+                            <span class="tree-icon">
+                                💽
+                            </span>
+
+                            <span>
+                                Windows 10 x64 Legacy (C:)
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            class="tree-children"
+                            id="c-c">
+
+                            <div
+                                class="tree-row"
+                                onclick="selectFolder(this, 'C:\\Program Files')">
+
+                                <span class="tree-expander"></span>
+
+                                <span class="tree-icon">
+                                    📁
+                                </span>
+
+                                <span>
+                                    Program Files
+                                </span>
+
+                            </div>
+
+
+                            <div
+                                class="tree-row"
+                                onclick="selectFolder(this, 'C:\\GNSS_Data')">
+
+                                <span class="tree-expander"></span>
+
+                                <span class="tree-icon">
+                                    📁
+                                </span>
+
+                                <span>
+                                    GNSS_Data
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            class="tree-row"
+                            onclick="selectFolder(this, 'HDD1- New Volume (D:)')">
+
+                            <span class="tree-expander">
+                                ▶
+                            </span>
+
+                            <span class="tree-icon">
+                                💾
+                            </span>
+
+                            <span>
+                                HDD1- New Volume (D:)
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            class="tree-row"
+                            onclick="selectFolder(this, 'HDD2- Code (E:)')">
+
+                            <span class="tree-expander">
+                                ▶
+                            </span>
+
+                            <span class="tree-icon">
+                                💾
+                            </span>
+
+                            <span>
+                                HDD2- Code (E:)
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            class="tree-row"
+                            onclick="selectFolder(this, 'HDD2 - MASTA (F:)')">
+
+                            <span class="tree-expander">
+                                ▶
+                            </span>
+
+                            <span class="tree-icon">
+                                💾
+                            </span>
+
+                            <span>
+                                HDD2 - MASTA (F:)
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="dialog-footer">
+
+            <button onclick="confirmFolderSelection()">
+                OK
+            </button>
+
+            <button onclick="closeFolderDialog()">
+                Cancel
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script src="../js/app.js"></script>
+
+<script>
+
+    /* =========================================================
+       SOURCE SETTINGS
+    ========================================================= */
+
+    function showSettings(type) {
+
+        const panels = [
+            "serialSettings",
+            "playbackSettings",
+            "networkSettings"
+        ];
+
+        const options = [
+            "serialOption",
+            "playbackOption",
+            "networkOption"
+        ];
+
+
+        panels.forEach(function(id) {
+
+            document
+                .getElementById(id)
+                .classList.remove("active");
+
+        });
+
+
+        options.forEach(function(id) {
+
+            document
+                .getElementById(id)
+                .classList.remove("selected");
+
+        });
+
+
+        document
+            .getElementById(type + "Settings")
+            .classList.add("active");
+
+
+        document
+            .getElementById(type + "Option")
+            .classList.add("selected");
+
+
+        setTimeout(function() {
+
+            document
+                .getElementById(type + "Settings")
+                .scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+
+        }, 100);
+
+    }
+
+
+    /* =========================================================
+       CLOSE SETTINGS
+    ========================================================= */
+
+    function closeSettings() {
+
+        const panels = [
+            "serialSettings",
+            "playbackSettings",
+            "networkSettings"
+        ];
+
+        const options = [
+            "serialOption",
+            "playbackOption",
+            "networkOption"
+        ];
+
+
+        panels.forEach(function(id) {
+
+            document
+                .getElementById(id)
+                .classList.remove("active");
+
+        });
+
+
+        options.forEach(function(id) {
+
+            document
+                .getElementById(id)
+                .classList.remove("selected");
+
+        });
+
+    }
+
+
+    /* =========================================================
+       SERIAL / NETWORK
+    ========================================================= */
+
+    function startConfiguration(type) {
+
+        if (type === "Network") {
+
+            const host =
+                document.getElementById("networkHost").value;
+
+            const port =
+                document.getElementById("networkPort").value;
+
+
+            if (!host || !port) {
+
+                alert(
+                    "Please enter Host / IP Address and Port."
+                );
+
+                return;
+
+            }
+
+            alert(
+                "Network configuration saved."
+            );
+
+            return;
+        }
+
+
+        if (type === "Serial") {
+
+            alert(
+                "Serial configuration started."
+            );
+
+        }
+
+    }
+
+
+    // playback
+
+
+    /* =========================================================
+   PLAYBACK
+========================================================= */
+
+let currentMode = "single";
+let chosenFolder = "Documents";
+
+
+/* =========================================================
+   PLAYBACK MODE SWITCH
+========================================================= */
+
+function handleModeSwitch(mode) {
+
+    currentMode = mode;
+
+    const input =
+        document.getElementById("file-path-input");
+
+    if (!input) return;
+
+
+    if (mode === "multiple") {
+
+        openFolderDialog();
+
+    } else {
+
+        input.value = "";
+
+    }
+
+}
+
+
+/* =========================================================
+   BROWSE BUTTON
+========================================================= */
+
+function triggerBrowse() {
+
+    if (currentMode === "multiple") {
+
+        /*
+         * Multiple mode:
+         * Open the custom folder/file selection dialog
+         */
+
+        openFolderDialog();
+
+    } else {
+
+        /*
+         * Single mode:
+         * Open browser file picker
+         */
+
+        const picker =
+            document.getElementById(
+                "single-file-picker"
+            );
+
+        if (picker) {
+
+            picker.click();
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   SINGLE GSV FILE PICKER
+========================================================= */
+
+async function handleSingleFilePick(input) {
+
+    const file =
+        input.files && input.files[0];
+
+    if (!file) {
+        return;
+    }
+
+
+    /* =====================================================
+       SHOW SELECTED FILE NAME
+    ===================================================== */
+
+    const pathInput =
+        document.getElementById(
+            "file-path-input"
+        );
+
+    if (pathInput) {
+
+        pathInput.value =
+            file.name;
+
+    }
+
+
+    /* =====================================================
+       READ SELECTED FILE
+    ===================================================== */
+
+    try {
+
+        const text =
+            await file.text();
+
+
+        /* =================================================
+           PARSE GSV DATA
+        ================================================= */
+
+        const satellites =
+            parsePlaybackGSV(text);
+
+
+        /* =================================================
+           CHECK GSV DATA
+        ================================================= */
+
+        if (!satellites.length) {
+
+            alert(
+                "No valid GSV satellite data was found in the selected file."
+            );
+
+            return;
+
+        }
+
+
+        /* =================================================
+           PREPARE SKY VIEW DATA
+        ================================================= */
+
+        const skyViewData = {
+
+            fileName:
+                file.name,
+
+            loadedAt:
+                new Date().toISOString(),
+
+            satellites:
+                satellites
+
+        };
+
+
+        /* =================================================
+           SAVE DATA FOR SKY VIEW
+        ================================================= */
+
+        localStorage.setItem(
+
+            "gnssPlaybackSkyViewData",
+
+            JSON.stringify(
+                skyViewData
+            )
+
+        );
+
+
+        /* =================================================
+           INFORM OPEN SKY VIEW PAGE
+        ================================================= */
+
+        if (
+            "BroadcastChannel"
+            in window
+        ) {
+
+            const channel =
+                new BroadcastChannel(
+                    "gnss-playback-channel"
+                );
+
+
+            channel.postMessage({
+
+                type:
+                    "GSV_UPDATED",
+
+                data:
+                    skyViewData
+
+            });
+
+
+            channel.close();
+
+        }
+
+
+        /* =================================================
+           CONSOLE INFORMATION
+        ================================================= */
+
+        console.log(
+            "GSV successfully loaded:",
+            skyViewData
+        );
+
+        console.log(
+            `${satellites.length} satellites loaded from ${file.name}`
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "GSV file reading error:",
+            error
+        );
+
+
+        alert(
+            "Unable to read the selected GSV file."
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   MULTIPLE FILE PICKER
+========================================================= */
+
+async function handleMultipleFilePick(input) {
+
+    if (
+        !input.files ||
+        input.files.length === 0
+    ) {
+
+        return;
+
+    }
+
+
+    /* =====================================================
+       SHOW SELECTED FILE NAMES
+    ===================================================== */
+
+    const fileNames = [];
+
+    for (
+        let i = 0;
+        i < input.files.length;
+        i++
+    ) {
+
+        fileNames.push(
+            input.files[i].name
+        );
+
+    }
+
+
+    const pathInput =
+        document.getElementById(
+            "file-path-input"
+        );
+
+    if (pathInput) {
+
+        pathInput.value =
+            fileNames.join(", ");
+
+    }
+
+
+    /* =====================================================
+       PARSE ALL SELECTED FILES
+    ===================================================== */
+
+    let allSatellites = [];
+
+    try {
+
+        for (
+            let i = 0;
+            i < input.files.length;
+            i++
+        ) {
+
+            const file =
+                input.files[i];
+
+
+            const text =
+                await file.text();
+
+
+            const satellites =
+                parsePlaybackGSV(text);
+
+
+            allSatellites =
+                allSatellites.concat(
+                    satellites
+                );
+
+        }
+
+
+        /* =================================================
+           REMOVE DUPLICATES
+        ================================================= */
+
+        const uniqueSatellites =
+            [];
+
+        const seen =
+            new Set();
+
+
+        allSatellites.forEach(
+            satellite => {
+
+                const key =
+                    `${satellite.constellation}-${satellite.prn}`;
+
+                if (
+                    !seen.has(key)
+                ) {
+
+                    seen.add(key);
+
+                    uniqueSatellites.push(
+                        satellite
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* =================================================
+           CHECK DATA
+        ================================================= */
+
+        if (
+            !uniqueSatellites.length
+        ) {
+
+            alert(
+                "No valid GSV satellite data was found in the selected files."
+            );
+
+            return;
+
+        }
+
+
+        /* =================================================
+           PREPARE SKY VIEW DATA
+        ================================================= */
+
+        const skyViewData = {
+
+            fileName:
+                fileNames.join(", "),
+
+            loadedAt:
+                new Date().toISOString(),
+
+            satellites:
+                uniqueSatellites
+
+        };
+
+
+        /* =================================================
+           SAVE FOR SKY VIEW
+        ================================================= */
+
+        localStorage.setItem(
+
+            "gnssPlaybackSkyViewData",
+
+            JSON.stringify(
+                skyViewData
+            )
+
+        );
+
+
+        /* =================================================
+           UPDATE SKY VIEW
+        ================================================= */
+
+        if (
+            "BroadcastChannel"
+            in window
+        ) {
+
+            const channel =
+                new BroadcastChannel(
+                    "gnss-playback-channel"
+                );
+
+
+            channel.postMessage({
+
+                type:
+                    "GSV_UPDATED",
+
+                data:
+                    skyViewData
+
+            });
+
+
+            channel.close();
+
+        }
+
+
+        console.log(
+            "Multiple GSV files loaded:",
+            skyViewData
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Multiple GSV file reading error:",
+            error
+        );
+
+
+        alert(
+            "Unable to read one or more selected GSV files."
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   GSV PARSER
+========================================================= */
+
+function parsePlaybackGSV(text) {
+
+    const satellites = [];
+
+    const seen = new Set();
+
+
+    /* =====================================================
+       CONSTELLATION DETECTION
+    ===================================================== */
+
+    const constellationFromHeader =
+        header => {
+
+            const id =
+                header.slice(1, 3);
+
+
+            return {
+
+                GP: "GPS",
+
+                BD: "BeiDou",
+
+                GB: "BeiDou",
+
+                GL: "GLONASS",
+
+                GA: "Galileo",
+
+                GI: "NavIC",
+
+                GQ: "QZSS",
+
+                QZ: "QZSS",
+
+                SB: "SBAS"
+
+            }[id] || id;
+
+        };
+
+
+    /* =====================================================
+       SPLIT FILE INTO LINES
+    ===================================================== */
+
+    const lines =
+        text.split(/\r?\n/);
+
+
+    /* =====================================================
+       PROCESS EACH LINE
+    ===================================================== */
+
+    lines.forEach(
+        line => {
+
+            line =
+                line.trim();
+
+
+            if (
+                !line ||
+                line[0] !== "$"
+            ) {
+
+                return;
+
+            }
+
+
+            /* =============================================
+               REMOVE CHECKSUM
+            ============================================= */
+
+            const clean =
+                line.split("*")[0];
+
+
+            const fields =
+                clean.split(",");
+
+
+            const header =
+                fields[0];
+
+
+            /* =============================================
+               ACCEPT GSV SENTENCES
+               
+               Examples:
+               GPGSV
+               BDGSV
+               GLGSV
+               GAGSV
+               GIGSV
+               GQGSV
+               ============================================= */
+
+            if (
+                !/^[A-Z]{2}GSV$/.test(
+                    header.slice(1)
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            const constellation =
+                constellationFromHeader(
+                    header
+                );
+
+
+            /* =============================================
+               EACH SATELLITE HAS:
+               
+               PRN
+               Elevation
+               Azimuth
+               SNR
+               ============================================= */
+
+            for (
+                let i = 4;
+                i + 3 < fields.length;
+                i += 4
+            ) {
+
+                const prn =
+                    Number(
+                        fields[i]
+                    );
+
+
+                const elevation =
+                    Number(
+                        fields[i + 1]
+                    );
+
+
+                const azimuth =
+                    Number(
+                        fields[i + 2]
+                    );
+
+
+                const snr =
+                    Number(
+                        fields[i + 3]
+                    );
+
+
+                /* =========================================
+                   VALIDATION
+                ========================================= */
+
+                if (
+                    !Number.isFinite(prn) ||
+                    !Number.isFinite(elevation) ||
+                    !Number.isFinite(azimuth)
+                ) {
+
+                    continue;
+
+                }
+
+
+                /* =========================================
+                   UNIQUE SATELLITE KEY
+                ========================================= */
+
+                const key =
+                    `${constellation}-${prn}`;
+
+
+                if (
+                    seen.has(key)
+                ) {
+
+                    continue;
+
+                }
+
+
+                seen.add(key);
+
+
+                /* =========================================
+                   STORE SATELLITE
+                ========================================= */
+
+                satellites.push({
+
+                    constellation:
+                        constellation,
+
+                    prn:
+                        prn,
+
+                    elevation:
+                        Math.max(
+                            0,
+                            Math.min(
+                                90,
+                                elevation
+                            )
+                        ),
+
+                    azimuth:
+                        (
+                            (
+                                azimuth % 360
+                            ) + 360
+                        ) % 360,
+
+                    snr:
+                        Number.isFinite(snr)
+                            ? snr
+                            : null
+
+                });
+
+            }
+
+        }
+    );
+
+
+    return satellites;
+
+}
+
+
+/* =========================================================
+   FOLDER DIALOG
+========================================================= */
+
+function openFolderDialog() {
+
+    const modal =
+        document.getElementById(
+            "folder-dialog-modal"
+        );
+
+    if (modal) {
+
+        modal.style.display =
+            "flex";
+
+    }
+
+}
+
+
+function closeFolderDialog() {
+
+    const modal =
+        document.getElementById(
+            "folder-dialog-modal"
+        );
+
+    if (modal) {
+
+        modal.style.display =
+            "none";
+
+    }
+
+}
+
+
+/* =========================================================
+   FOLDER TREE
+========================================================= */
+
+function toggleTreeNode(
+    event,
+    containerId
+) {
+
+    event.stopPropagation();
+
+
+    const container =
+        document.getElementById(
+            containerId
+        );
+
+
+    const expander =
+        event.target;
+
+
+    if (!container) {
+
+        return;
+
+    }
+
+
+    if (
+        container.classList.contains(
+            "expanded"
+        )
+    ) {
+
+        container.classList.remove(
+            "expanded"
+        );
+
+        expander.textContent =
+            "▶";
+
+    } else {
+
+        container.classList.add(
+            "expanded"
+        );
+
+        expander.textContent =
+            "▼";
+
+    }
+
+}
+
+
+/* =========================================================
+   SELECT FOLDER
+========================================================= */
+
+function selectFolder(
+    element,
+    folderPath
+) {
+
+    document
+        .querySelectorAll(
+            ".tree-row"
+        )
+        .forEach(
+            function(row) {
+
+                row.classList.remove(
+                    "selected"
+                );
+
+            }
+        );
+
+
+    element.classList.add(
+        "selected"
+    );
+
+
+    chosenFolder =
+        folderPath;
+
+}
+
+
+/* =========================================================
+   CONFIRM FOLDER SELECTION
+========================================================= */
+
+function confirmFolderSelection() {
+
+    const input =
+        document.getElementById(
+            "file-path-input"
+        );
+
+
+    if (input) {
+
+        input.value =
+            "C:\\" +
+            chosenFolder;
+
+    }
+
+
+    closeFolderDialog();
+
+}
+
+
+/* =========================================================
+   PLAYBACK STATUS
+========================================================= */
+
+function setPlaybackRunning(
+    isRunning
+) {
+
+    const playLed =
+        document.getElementById(
+            "led-play"
+        );
+
+
+    const errorLed =
+        document.getElementById(
+            "led-error"
+        );
+
+
+    const pathInput =
+        document.getElementById(
+            "file-path-input"
+        );
+
+
+    const path =
+        pathInput
+            ? pathInput.value.trim()
+            : "";
+
+
+    /* =====================================================
+       START PLAYBACK
+    ===================================================== */
+
+    if (isRunning) {
+
+        if (!path) {
+
+            if (errorLed) {
+
+                errorLed.className =
+                    "status-bulb active-red";
+
+            }
+
+
+            if (playLed) {
+
+                playLed.className =
+                    "status-bulb";
+
+            }
+
+
+            alert(
+                "Please select a file or folder source first."
+            );
+
+
+            return;
+
+        }
+
+
+        if (playLed) {
+
+            playLed.className =
+                "status-bulb active-green";
+
+        }
+
+
+        if (errorLed) {
+
+            errorLed.className =
+                "status-bulb";
+
+        }
+
+
+    } else {
+
+        /* ===============================================
+           STOP PLAYBACK
+        =============================================== */
+
+        if (playLed) {
+
+            playLed.className =
+                "status-bulb";
+
+        }
+
+
+        if (errorLed) {
+
+            errorLed.className =
+                "status-bulb";
+
+        }
+
+    }
+
+}
+
+    
+
+    /* =========================================================
+       SIDEBAR
+    ========================================================= */
+
+    function toggleSidebar() {
+
+        document
+            .getElementById("sidebar")
+            .classList.toggle("active");
+
+    }
+
+
+    /* =========================================================
+       EXIT
+    ========================================================= */
+
+    function handleExit() {
+
+        if (
+            confirm(
+                "Are you sure you want to exit?"
+            )
+        ) {
+
+            window.location.href =
+                "../index.html";
+
+        }
+
+    }
+
+</script>
 
 </body>
-
 </html>
+
